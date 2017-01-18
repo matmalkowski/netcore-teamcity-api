@@ -7,7 +7,7 @@ namespace NetCoreTeamCity.Clients
         private readonly string _userName;
         private readonly string _password;
 
-        internal TeamCityConnectionSettings(string teamCityHost, string userName, string password)
+        public TeamCityConnectionSettings(string teamCityHost, string userName, string password)
         {
             _teamCityHost = teamCityHost;
             _userName = userName;
