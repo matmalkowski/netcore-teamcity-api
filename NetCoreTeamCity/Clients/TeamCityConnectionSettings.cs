@@ -1,20 +1,21 @@
-﻿
+﻿using System;
+
 namespace NetCoreTeamCity.Clients
 {
     internal class TeamCityConnectionSettings : ITeamCityConnectionSettings
     {
-        private readonly string _teamCityHost;
-        private readonly string _userName;
-        private readonly string _password;
-
-        public TeamCityConnectionSettings(string teamCityHost, string userName, string password)
+        public TeamCityConnectionSettings(Uri teamCityHost, bool connectAsGuest, string userName, string password, bool favorJsonOverXml = true)
         {
-            _teamCityHost = teamCityHost;
-            _userName = userName;
-            _password = password;
+            TeamCityHost = teamCityHost;
+            ConnectAsGuest = connectAsGuest;
+            Username = userName;
+            Password = password;
+            FavorJsonOverXml = favorJsonOverXml;
         }
-        public string TeamCityHost { get { return _teamCityHost; } }
-        public string Username { get { return _userName; } }
-        public string Password { get { return _password; } }
+        public Uri TeamCityHost { get; private set; }
+        public bool ConnectAsGuest { get; private set; }
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        public bool FavorJsonOverXml { get; private set; }
     }
 }

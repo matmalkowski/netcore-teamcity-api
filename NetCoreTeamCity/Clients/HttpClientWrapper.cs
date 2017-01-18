@@ -44,11 +44,16 @@ namespace NetCoreTeamCity.Clients
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
             return _client.PostAsync(url, content);
         }
-
-        public void SetBasicAuthentication(string userName, string password, bool forceBasicAuth)
+        
+        public void SetBasicAuthentication(string userName, string password)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+        }
+        
+        public void Dispose()
+        {
+            _client.Dispose();
         }
 
     }

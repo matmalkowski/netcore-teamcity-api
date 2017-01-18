@@ -1,8 +1,12 @@
-﻿namespace NetCoreTeamCity.Clients
+﻿using System;
+
+namespace NetCoreTeamCity.Clients
 {
     internal interface ITeamCityConnectionSettings
     {
-        string TeamCityHost { get; }
+        Uri TeamCityHost { get; }
+        bool FavorJsonOverXml { get; }
+        bool ConnectAsGuest { get; }
         string Username { get; }
         string Password { get; }
     }
