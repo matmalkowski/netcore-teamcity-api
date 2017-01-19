@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NetCoreTeamCity.ApiParameters.Build;
+﻿using NetCoreTeamCity.ApiParameters.Build;
 
 namespace NetCoreTeamCity.Api
 {
