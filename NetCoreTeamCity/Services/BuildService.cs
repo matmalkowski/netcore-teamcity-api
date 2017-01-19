@@ -1,4 +1,6 @@
-﻿using System.Net;
+using System.Collections.Generic;
+using System.Net;
+using NetCoreTeamCity.ApiParameters.Build;
 using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Exceptions;
 using NetCoreTeamCity.Models;
@@ -25,6 +27,11 @@ namespace NetCoreTeamCity.Services
                 if (exception.StatusCode == HttpStatusCode.NotFound) return null;
                 throw;
             }
+        }
+
+        public IList<Build> Find(BuildLocator locator)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

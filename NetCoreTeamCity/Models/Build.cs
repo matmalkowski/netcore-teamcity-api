@@ -4,10 +4,6 @@ using System;
 
 namespace NetCoreTeamCity.Models
 {
-    
-
-    
-
     public class Build
     {
         public long Id { get; set; }
@@ -26,7 +22,7 @@ namespace NetCoreTeamCity.Models
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public DateTime QueuedDate { get; set; }
-        public BuildType BuildType { get; set; }
+        public BuildConfiguration BuildType { get; set; }
         public Triggered Triggered { get; set; }
         public LastChanges LastChanges { get; set; }
         public Revisions Revisions { get; set; }

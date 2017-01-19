@@ -1,6 +1,6 @@
 ﻿namespace NetCoreTeamCity.Models
 {
-    public class BuildType
+    public class BuildConfiguration
     {
         public string Id { get; set; }
         public string Name { get; set; }

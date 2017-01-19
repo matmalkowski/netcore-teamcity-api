@@ -9,6 +9,7 @@ namespace NetCoreTeamCity.Samples
         {
             var teamCity = new TeamCity(args[0], args[1], args[2]);
             var b = teamCity.Builds.Get(412910);
+            teamCity.Builds.Find(By.Build.Id(412910));
             Console.WriteLine(b.ToString());
             Console.ReadLine();
         }
