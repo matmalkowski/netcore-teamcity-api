@@ -1,22 +1,19 @@
 ﻿using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Models;
+using NetCoreTeamCity.Services;
 
 namespace NetCoreTeamCity.Api
 {
     public class TeamCity : ITeamCity
     {
-        private ITeamCityApiClient _teamCityService;
+        private readonly IBuildService _buildService;
         public TeamCity(string host, string userName, string password, bool usingSSL = true)
         {
             var connectionConfig = new TeamCityConnectionSettingsBuilder().ToHost(host).UsingSSL().AsUser(userName, password).Build();
             var bootstrapper = new BootStrapper(connectionConfig);
-            _teamCityService = bootstrapper.Get<ITeamCityApiClient>();
-
+            _buildService = bootstrapper.Get<IBuildService>();
         }
 
-        public Build GetBuild()
-        {
-            return _teamCityService.Get<Build>("builds/id:412910");
-        }
+        public IBuildService Builds { get { return _buildService; } }
     }
 }

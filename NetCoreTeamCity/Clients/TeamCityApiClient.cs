@@ -39,10 +39,7 @@ namespace NetCoreTeamCity.Clients
             }
         }
 
-        private string RequestContentType
-        {
-            get { return _teamCityConnectionSettings.FavorJsonOverXml ? HttpContentType.Json : HttpContentType.Xml; }
-        }
+        private string RequestContentType => _teamCityConnectionSettings.FavorJsonOverXml ? HttpContentType.Json : HttpContentType.Xml;
 
         private string GetRequestUri(string url)
         {
@@ -50,9 +47,9 @@ namespace NetCoreTeamCity.Clients
             return new Uri(_teamCityConnectionSettings.TeamCityHost, $"{auth}/app/rest/{url}").ToString();
         }
 
-        private void ThrowHttpException(HttpResponseMessage response, string url)
+        private static void ThrowHttpException(HttpResponseMessage response, string url)
         {
-            throw new HttpException(response.StatusCode, $"Error: {response.StatusCode.ToString()}\nHTTP: {response.StatusCode}\nURL: {url}\n{response.Content.ReadAsStringAsync().Result}");
+            throw new HttpException(response.StatusCode, $"Error: {response.StatusCode}\nHTTP: {response.StatusCode}\nURL: {url}\n{response.Content.ReadAsStringAsync().Result}");
         }
 
         private IHttpClientWrapper GetHttpClient()

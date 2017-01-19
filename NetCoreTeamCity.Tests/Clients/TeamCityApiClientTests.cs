@@ -94,7 +94,24 @@ namespace NetCoreTeamCity.Tests.Clients
             Action action = () => tcApiClient.Get<Build>("test");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(400);
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public void GetCall_NoAuthenticationProvidedForNonGuestCall_ExceptionThrown()
+        {
+            // Arrange
+            var settings = new TeamCityConnectionSettings(new Uri("https://localhost"), false, string.Empty, string.Empty);
+            var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
+            A.CallTo(() => httpClientFactory.Create()).Returns(A.Fake<IHttpClientWrapper>());
+
+            var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
+
+            // Act
+            Action action = () => tcApiClient.Get<Build>("test");
+
+            // Assert
+            action.ShouldThrow<ArgumentException>().Which.Message.Should().Be("When connecting as guest you must specify username and password");
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using NetCoreTeamCity.Models;
+using NetCoreTeamCity.Services;
 
 namespace NetCoreTeamCity.Api
 {
     public interface ITeamCity
     {
-        Build GetBuild();
+        IBuildService Builds { get; }
     }
 }

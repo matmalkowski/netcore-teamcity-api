@@ -16,7 +16,7 @@ namespace NetCoreTeamCity.Tests
             var bootstrapper = new BootStrapper(A.Fake<ITeamCityConnectionSettings>());
 
             // Act
-            var teamCityService = bootstrapper.Get<ITeamCityService>();
+            var teamCityService = bootstrapper.Get<IBuildService>();
 
             // Assert
             teamCityService.Should().NotBeNull();
