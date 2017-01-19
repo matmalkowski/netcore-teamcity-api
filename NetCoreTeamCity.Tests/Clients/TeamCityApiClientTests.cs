@@ -22,7 +22,7 @@ namespace NetCoreTeamCity.Tests.Clients
         [OneTimeSetUp]
         public void SetUp()
         {
-            var build = new Build { BuildTypeId = "test", FinishDate = DateUnderTest };
+            var build = new BuildModel { BuildTypeId = "test", FinishDate = DateUnderTest };
             JsonResponseWithOkStatus = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(JsonConvert.SerializeObject(build, new TeamCityDateTimeConventer()))
@@ -47,7 +47,7 @@ namespace NetCoreTeamCity.Tests.Clients
             var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
 
             // Act
-            var result = tcApiClient.Get<Build>("test");
+            var result = tcApiClient.Get<BuildModel>("test");
 
             // Assert
             result.Should().NotBeNull();
@@ -69,7 +69,7 @@ namespace NetCoreTeamCity.Tests.Clients
             var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
 
             // Act
-            var result = tcApiClient.Get<Build>("test");
+            var result = tcApiClient.Get<BuildModel>("test");
 
             // Assert
             result.Should().NotBeNull();
@@ -91,7 +91,7 @@ namespace NetCoreTeamCity.Tests.Clients
             var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
 
             // Act
-            Action action = () => tcApiClient.Get<Build>("test");
+            Action action = () => tcApiClient.Get<BuildModel>("test");
 
             // Assert
             action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -108,7 +108,7 @@ namespace NetCoreTeamCity.Tests.Clients
             var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
 
             // Act
-            Action action = () => tcApiClient.Get<Build>("test");
+            Action action = () => tcApiClient.Get<BuildModel>("test");
 
             // Assert
             action.ShouldThrow<ArgumentException>().Which.Message.Should().Be("When connecting as guest you must specify username and password");

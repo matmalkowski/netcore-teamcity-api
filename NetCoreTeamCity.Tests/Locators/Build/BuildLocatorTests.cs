@@ -2,13 +2,13 @@
 using NetCoreTeamCity.Api;
 using NUnit.Framework;
 
-namespace NetCoreTeamCity.Tests.Locators
+namespace NetCoreTeamCity.Tests.Locators.Build
 {
     [TestFixture]
     public class BuildLocatorTests
     {
         [Test]
-        public void ById()
+        public void By_Id()
         {
             // Arrange
             var locator = By.Build.Id(123);

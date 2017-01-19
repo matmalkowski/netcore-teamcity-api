@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace NetCoreTeamCity.Models
 {
-    public class Build
+    public class BuildModel
     {
         public long Id { get; set; }
         public string Number { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public BuildStatus? Status { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public BuildState? State { get; set; }
+
         public string BuildTypeId { get; set; }
         public string Href { get; set; }
         public string WebUrl { get; set; }
@@ -22,9 +24,9 @@ namespace NetCoreTeamCity.Models
         public DateTime QueuedDate { get; set; }
         public BuildConfiguration BuildType { get; set; }
         public Triggered Triggered { get; set; }
-        public IList<Change> LastChanges { get; set; }
-        public IList<Revision> Revisions { get; set; }
+        public LastChanges LastChanges { get; set; }
+        public Revisions Revisions { get; set; }
         public Agent Agent { get; set; }
-        public IList<Property> Properties { get; set; }
+        public Properties Properties { get; set; }
     }
 }

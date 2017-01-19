@@ -17,7 +17,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Build>("builds/id:123")).Returns(new Build() {Id = 123});
+            A.CallTo(() => teamCityApiClient.Get<BuildModel>("builds/id:123")).Returns(new BuildModel() {Id = 123});
 
             var buildService = new BuildService(teamCityApiClient);
 
@@ -34,7 +34,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Build>("builds/id:123")).Throws(new HttpException(HttpStatusCode.NotFound));
+            A.CallTo(() => teamCityApiClient.Get<BuildModel>("builds/id:123")).Throws(new HttpException(HttpStatusCode.NotFound));
 
             var buildService = new BuildService(teamCityApiClient);
 

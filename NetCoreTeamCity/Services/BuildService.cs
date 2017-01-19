@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using NetCoreTeamCity.ApiParameters.Build;
 using NetCoreTeamCity.Clients;
@@ -20,7 +21,7 @@ namespace NetCoreTeamCity.Services
         {
             try
             {
-                return _apiClient.Get<Build>($"builds/id:{buildId}");
+                return _apiClient.Get<BuildModel>($"builds/id:{buildId}").Convert();
             }
             catch (HttpException exception)
             {
@@ -29,9 +30,13 @@ namespace NetCoreTeamCity.Services
             }
         }
 
-        public IList<Build> Find(BuildLocator locator)
+        public IList<Build> Find(BuildLocator locator, BuildField fields = null)
         {
-            throw new System.NotImplementedException();
+            var query = $"builds?locator={locator.GetLocatorQueryString()}";
+            if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
+            
+            var builds = _apiClient.Get<Builds>(query);
+            return builds == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
         }
     }
 }

@@ -8,8 +8,8 @@ namespace NetCoreTeamCity.Samples
         public static void Main(string[] args)
         {
             var teamCity = new TeamCity(args[0], args[1], args[2]);
-            var b = teamCity.Builds.Get(412910);
-            teamCity.Builds.Find(By.Build.Id(412910));
+            //var b = teamCity.Builds.Get(412910);
+            var b = teamCity.Builds.Find(By.Build.Id(412910), Include.Build.BuildType().Triggered().LastChanges().Agent().Properties());
             Console.WriteLine(b.ToString());
             Console.ReadLine();
         }

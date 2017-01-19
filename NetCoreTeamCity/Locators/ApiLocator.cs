@@ -1,4 +1,4 @@
-﻿namespace NetCoreTeamCity.ApiParameters
+﻿namespace NetCoreTeamCity.Locators
 {
     internal class ApiLocator
     {

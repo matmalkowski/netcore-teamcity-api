@@ -1,11 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using NetCoreTeamCity.Locators;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NetCoreTeamCity.ApiParameters.Build
 {
-    public class BuildLocator : IBuildLocator
+    public class BuildLocator
     {
-        private readonly List<ApiLocator> _locators = new List<ApiLocator>();
+        private readonly List<ApiLocator> _locators;
+
+        internal BuildLocator()
+        {
+            _locators = new List<ApiLocator>();
+        }
 
         public BuildLocator Id(long buildId)
         {
