@@ -142,17 +142,17 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             query.Should().Be($"status:{status.ToString().ToUpper()}");
         }
 
-        [Ignore("Not implemented yet")]
         [Test]
         public void By_User()
         {
             // Arrange
-            var locator = By.Build.User();
+            var locator = By.Build.User(By.User.Id(123));
 
             // Act
             var query = locator.GetLocatorQueryString();
 
             // Assert
+            query.Should().Be("user:(id:123)");
         }
 
         [TestCase(Flag.Any)]
@@ -280,6 +280,19 @@ namespace NetCoreTeamCity.Tests.Locators.Build
 
             // Assert
             query.Should().Be("branch:customName");
+        }
+
+        [Test]
+        public void By_BranchLocator()
+        {
+            // Arrange
+            var locator = By.Build.Branch(By.Branch.Name("123"));
+
+            // Act
+            var query = locator.GetLocatorQueryString();
+
+            // Assert
+            query.Should().Be("branch:(name:123)");
         }
 
         [Test]
@@ -489,5 +502,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             // Assert
             query.Should().Be("finishDate:(date:20130305T170030%2B0000,condition:after)");
         }
+
+        
     }
 }

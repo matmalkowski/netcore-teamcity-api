@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using NetCoreTeamCity.Helpers;
+using NetCoreTeamCity.Locators.Branch;
 using NetCoreTeamCity.Locators.BuildConfiguration;
+using NetCoreTeamCity.Locators.User;
 using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Locators.Build
@@ -67,9 +69,9 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
-        public BuildLocator User()
+        public BuildLocator User(UserLocator userLocator)
         {
-            //TODO add UserLocator first
+            _locators.Add(new ApiLocator("user", $"({userLocator.GetLocatorQueryString()})"));
             return this;
         }
 
@@ -125,9 +127,9 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
-        public BuildLocator Branch()
+        public BuildLocator Branch(BranchLocator branchLocator)
         {
-            //TODO Add BranchLocator
+            _locators.Add(new ApiLocator("branch", $"({branchLocator.GetLocatorQueryString()})"));
             return this;
         }
 
