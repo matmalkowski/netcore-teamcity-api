@@ -1,8 +1,7 @@
-﻿using NetCoreTeamCity.Locators;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NetCoreTeamCity.ApiParameters.Build
+namespace NetCoreTeamCity.Locators.Build
 {
     public class BuildLocator
     {

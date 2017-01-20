@@ -22,5 +22,6 @@ namespace NetCoreTeamCity.Models
         public IList<Revision> Revisions { get; set; }
         public Agent Agent { get; set; }
         public IList<Property> Properties { get; set; }
+        public TestOccurrences TestOccurrences { get; set; }
     }
 }

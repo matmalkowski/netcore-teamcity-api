@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using NetCoreTeamCity.ApiParameters.Build;
 using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Exceptions;
+using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Services

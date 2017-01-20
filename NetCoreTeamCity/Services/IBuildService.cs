@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using NetCoreTeamCity.ApiParameters.Build;
+using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Services

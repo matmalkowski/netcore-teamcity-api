@@ -19,7 +19,8 @@
                 QueuedDate = model.QueuedDate,
                 BuildType = model.BuildType,
                 Triggered = model.Triggered,
-                Agent = model.Agent
+                Agent = model.Agent,
+                TestOccurrences = model.TestOccurrences
             };
 
             if (model.LastChanges?.Change != null)

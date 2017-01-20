@@ -1,4 +1,4 @@
-﻿using NetCoreTeamCity.ApiParameters.Build;
+﻿using NetCoreTeamCity.Locators.Build;
 
 namespace NetCoreTeamCity.Api
 {

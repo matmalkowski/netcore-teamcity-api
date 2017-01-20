@@ -28,5 +28,6 @@ namespace NetCoreTeamCity.Models
         public Revisions Revisions { get; set; }
         public Agent Agent { get; set; }
         public Properties Properties { get; set; }
+        public TestOccurrences TestOccurrences { get; set; }
     }
 }

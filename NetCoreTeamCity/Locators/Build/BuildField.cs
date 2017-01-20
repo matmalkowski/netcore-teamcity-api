@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetCoreTeamCity.ApiParameters.Build
+namespace NetCoreTeamCity.Locators.Build
 {
     public class BuildField
     {
@@ -62,6 +62,12 @@ namespace NetCoreTeamCity.ApiParameters.Build
         public BuildField Properties()
         {
             _fields.Add("properties(property)");
+            return this;
+        }
+
+        public BuildField TestOccurrences()
+        {
+            _fields.Add("testOccurrences");
             return this;
         }
 

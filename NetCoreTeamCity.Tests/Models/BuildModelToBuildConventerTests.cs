@@ -28,7 +28,8 @@ namespace NetCoreTeamCity.Tests.Models
                 QueuedDate = new DateTime(2000, 1, 3),
                 BuildType = new BuildConfiguration {Description = "buildTypeDescription"},
                 Triggered = new Triggered {Date = new DateTime(2000, 1, 1)},
-                Agent = new Agent {Id = 123}
+                Agent = new Agent {Id = 123},
+                TestOccurrences = new TestOccurrences { Count = 123 }
             };
 
             // Act
@@ -48,6 +49,7 @@ namespace NetCoreTeamCity.Tests.Models
             build.BuildType.Description.Should().Be("buildTypeDescription");
             build.Triggered.Date.Should().Be(new DateTime(2000, 1, 1));
             build.Agent.Id.Should().Be(123);
+            build.TestOccurrences.Count.Should().Be(123);
         }
 
         [Test]
