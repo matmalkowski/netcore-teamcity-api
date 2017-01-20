@@ -8,6 +8,6 @@ namespace NetCoreTeamCity.Services
     {
         Build Get(long buildId);
         IList<Build> Find(BuildLocator locator, BuildField fields = null);
-
+        IList<Build> Find(BuildField fields = null);
     }
 }

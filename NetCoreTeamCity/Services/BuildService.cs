@@ -38,5 +38,13 @@ namespace NetCoreTeamCity.Services
             var builds = _apiClient.Get<Builds>(query);
             return builds == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
         }
+
+        public IList<Build> Find(BuildField fields = null)
+        {
+            var query = "builds";
+            if (fields != null) query += $"?fields={fields.GetFieldsQueryString()}";
+            var builds = _apiClient.Get<Builds>(query);
+            return builds == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
+        }
     }
 }
