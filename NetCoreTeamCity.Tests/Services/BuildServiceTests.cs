@@ -52,7 +52,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() {Id = 1}, new BuildModel() {Id = 2} } });
 
             var buildService = new BuildService(teamCityApiClient);
@@ -70,7 +70,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100"))
                 .Returns(new Builds { Build = new List<BuildModel> () });
 
             var buildService = new BuildService(teamCityApiClient);
@@ -87,7 +87,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100&fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 }, new BuildModel() { Id = 2 } } });
 
             var buildService = new BuildService(teamCityApiClient);
@@ -105,7 +105,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=id:123"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123"))
                 .Returns(new Builds { Build = new List<BuildModel> () });
 
             var buildService = new BuildService(teamCityApiClient);
@@ -122,7 +122,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=id:123"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 } } });
 
             var buildService = new BuildService(teamCityApiClient);
@@ -140,7 +140,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=id:123&fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
+            A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123&fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 } } });
 
             var buildService = new BuildService(teamCityApiClient);

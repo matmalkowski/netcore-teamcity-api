@@ -30,21 +30,26 @@ namespace NetCoreTeamCity.Services
             }
         }
 
-        public IList<Build> Find(BuildLocator locator, BuildField fields = null)
+        public IList<Build> Find(BuildLocator locator, BuildField fields = null, int count = 100)
         {
-            var query = $"builds?locator={locator.GetLocatorQueryString()}";
-            if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
-            
+            var query = GetQuery("builds", locator, fields, count);
+            var builds = _apiClient.Get<Builds>(query);
+            return builds.Build == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
+        }
+
+        public IList<Build> Find(BuildField fields = null, int count = 100)
+        {
+            var query = GetQuery("builds", null, fields, count);
             var builds = _apiClient.Get<Builds>(query);
             return builds == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
         }
 
-        public IList<Build> Find(BuildField fields = null)
+        private string GetQuery(string endpoint, BuildLocator locator, BuildField fields = null, int count = 100)
         {
-            var query = "builds";
-            if (fields != null) query += $"?fields={fields.GetFieldsQueryString()}";
-            var builds = _apiClient.Get<Builds>(query);
-            return builds == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
+            var query = $"{endpoint}?locator=count:{count}";
+            if (locator != null) query += $",{locator.GetLocatorQueryString()}";
+            if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
+            return query;
         }
     }
 }
