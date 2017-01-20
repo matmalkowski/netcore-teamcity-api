@@ -75,17 +75,30 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             query.Should().Be("affectedProject:test_project_name");
         }
 
-        [Ignore("Not implemented yet")]
         [Test]
-        public void By_BuildType()
+        public void By_BuildType_Id()
         {
             // Arrange
-            var locator = By.Build.BuildType();
+            var locator = By.Build.BuildType(By.BuildType.Id("123"));
 
             // Act
             var query = locator.GetLocatorQueryString();
 
             // Assert
+            query.Should().Be("buildType:(id:123)");
+        }
+
+        [Test]
+        public void By_BuildType_Name()
+        {
+            // Arrange
+            var locator = By.Build.BuildType(By.BuildType.Name("123"));
+
+            // Act
+            var query = locator.GetLocatorQueryString();
+
+            // Assert
+            query.Should().Be("buildType:(name:123)");
         }
 
         [Test]

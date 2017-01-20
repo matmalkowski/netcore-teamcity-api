@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using NetCoreTeamCity.Helpers;
+using NetCoreTeamCity.Locators.BuildConfiguration;
 using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Locators.Build
@@ -40,9 +41,9 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
-        public BuildLocator BuildType()
+        public BuildLocator BuildType(BuildConfigurationLocator buildTypeLocator)
         {
-            //TODO add BuildLocator first
+            _locators.Add(new ApiLocator("buildType", $"({buildTypeLocator.GetLocatorQueryString()})"));
             return this;
         }
 
