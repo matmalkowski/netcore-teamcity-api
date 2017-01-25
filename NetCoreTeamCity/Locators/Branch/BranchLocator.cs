@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NetCoreTeamCity.Locators.Branch
 {
-    public class BranchLocator
+    public class BranchLocator : ILocator
     {
         private readonly List<ApiLocator> _locators;
 
@@ -36,7 +37,7 @@ namespace NetCoreTeamCity.Locators.Branch
             return this;
         }
 
-        internal string GetLocatorQueryString()
+        string ILocator.GetLocatorQueryString()
         {
             return string.Join(",", _locators.Select(l => l.Value));
         }

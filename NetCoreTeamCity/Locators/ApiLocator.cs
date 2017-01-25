@@ -8,5 +8,10 @@
         {
             Value = $"{key}:{value}";
         }
+
+        public ApiLocator(string locationQuery)
+        {
+            Value = locationQuery;
+        }
     }
 }

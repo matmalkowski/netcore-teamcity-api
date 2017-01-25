@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Net;
 
-namespace NetCoreTeamCity.Locators.BuildConfiguration
+namespace NetCoreTeamCity.Locators.Project
 {
-    public class BuildConfigurationLocator : ILocator
+    public class ProjectLocator : ILocator
     {
         private string _locator;
-        internal BuildConfigurationLocator() { }
+        internal ProjectLocator() { }
 
-        public BuildConfigurationLocator Id(string buildTypeId)
+        public ProjectLocator Id(string buildTypeId)
         {
             _locator = new ApiLocator("id", buildTypeId).Value;
             return this;
         }
 
-        public BuildConfigurationLocator Name(string buildConfigurationName)
+        public ProjectLocator Name(string buildConfigurationName)
         {
             _locator = new ApiLocator("name", WebUtility.UrlEncode(buildConfigurationName)).Value;
             return this;
@@ -22,7 +22,7 @@ namespace NetCoreTeamCity.Locators.BuildConfiguration
 
         string ILocator.GetLocatorQueryString()
         {
-            return $"buildType:({_locator})";
+            return $"project:({_locator})";
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace NetCoreTeamCity.Locators.User
+﻿using System;
+
+namespace NetCoreTeamCity.Locators.User
 {
-    public class UserLocator
+    public class UserLocator : ILocator
     {
         private ApiLocator _locator;
 
@@ -18,7 +20,7 @@
             return this;
         }
 
-        internal string GetLocatorQueryString()
+        string ILocator.GetLocatorQueryString()
         {
             return _locator.Value;
         }

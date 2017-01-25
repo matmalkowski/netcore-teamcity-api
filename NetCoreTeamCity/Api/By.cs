@@ -1,6 +1,7 @@
 using NetCoreTeamCity.Locators.Branch;
 using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Locators.BuildConfiguration;
+using NetCoreTeamCity.Locators.Project;
 using NetCoreTeamCity.Locators.User;
 
 namespace NetCoreTeamCity.Api
@@ -11,5 +12,6 @@ namespace NetCoreTeamCity.Api
         public static BuildConfigurationLocator BuildType => new BuildConfigurationLocator();
         public static BranchLocator Branch => new BranchLocator();
         public static UserLocator User => new UserLocator();
+        public static ProjectLocator Project => new ProjectLocator();
     }
 }

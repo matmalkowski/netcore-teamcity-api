@@ -14,13 +14,19 @@ namespace NetCoreTeamCity.Tests.Locators.Build
         public void By_Id_Number_Tags_Status_QueuedAfter()
         {
             // Arrange
-            var locator = By.Build.Id(123).Number(456).Tags("testTag1", "testTag2").Status(BuildStatus.Failure).QueuedDateAfter(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
+            var locator = By.Build
+                .Id(123)
+                .Number(456)
+                .Tags("testTag1", "testTag2")
+                .Status(BuildStatus.Failure)
+                .QueuedDateAfter(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc))
+                .QueuedDateAfter(By.Build.BuildType(By.BuildType.Id("123")));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
-            query.Should().Be("id:123,number:456,tag:testTag1,tag:testTag2,status:FAILURE,queuedDate:(date:20130305T170030%2B0000,condition:after)");
+            query.Should().Be("id:123,number:456,tag:testTag1,tag:testTag2,status:FAILURE,queuedDate:(date:20130305T170030%2B0000,condition:after),queuedDate:(buildType:(id:123),condition:after)");
         }
 
         [Test]
@@ -30,7 +36,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Id(123);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("id:123");
@@ -43,7 +49,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Number(123);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("number:123");
@@ -56,7 +62,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Project("test_project_name");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("project:test_project_name");
@@ -69,7 +75,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.AffectedProject("test_project_name");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("affectedProject:test_project_name");
@@ -82,7 +88,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.BuildType(By.BuildType.Id("123"));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("buildType:(id:123)");
@@ -95,7 +101,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.BuildType(By.BuildType.Name("123"));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("buildType:(name:123)");
@@ -108,7 +114,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Tag("testTag");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("tag:testTag");
@@ -121,7 +127,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Tags("testTag1", "testTag2");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("tag:testTag1,tag:testTag2");
@@ -136,7 +142,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Status(status);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"status:{status.ToString().ToUpper()}");
@@ -149,7 +155,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.User(By.User.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("user:(id:123)");
@@ -164,7 +170,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.PersonalFlag(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"personal:{flag.ToString().ToLower()}");
@@ -179,7 +185,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.CanceledFlag(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"canceled:{flag.ToString().ToLower()}");
@@ -194,7 +200,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.FailedToStartFlag(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"failedToStart:{flag.ToString().ToLower()}");
@@ -209,7 +215,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.State(state);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"state:{state.ToString().ToUpper()}");
@@ -224,7 +230,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.RunningFlag(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"running:{flag.ToString().ToLower()}");
@@ -236,7 +242,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Hanging();
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"state:running,hanging:true");
@@ -248,7 +254,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Hanging(false);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().BeEmpty();
@@ -263,7 +269,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.PinnedFlag(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"pinned:{flag.ToString().ToLower()}");
@@ -276,7 +282,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Branch("customName");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("branch:customName");
@@ -289,7 +295,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Branch(By.Branch.Name("123"));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("branch:(name:123)");
@@ -302,7 +308,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Revision("123");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("revision:123");
@@ -315,7 +321,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.AgentName("123");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("agentName:123");
@@ -328,7 +334,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.SinceBuild(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("sinceBuild:(id:123)");
@@ -341,7 +347,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.Since(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("sinceDate:20130305T170030%2B0000");
@@ -354,7 +360,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.QueuedDateBefore(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("queuedDate:(id:123,condition:before)");
@@ -367,7 +373,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.QueuedDateAfter(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("queuedDate:(id:123,condition:after)");
@@ -380,7 +386,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.QueuedDateBefore(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("queuedDate:(date:20130305T170030%2B0000,condition:before)");
@@ -393,7 +399,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.QueuedDateAfter(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("queuedDate:(date:20130305T170030%2B0000,condition:after)");
@@ -406,7 +412,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.StartDateBefore(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("startDate:(id:123,condition:before)");
@@ -419,7 +425,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.StartDateAfter(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("startDate:(id:123,condition:after)");
@@ -432,7 +438,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.StartDateBefore(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("startDate:(date:20130305T170030%2B0000,condition:before)");
@@ -445,7 +451,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.StartDateAfter(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("startDate:(date:20130305T170030%2B0000,condition:after)");
@@ -458,7 +464,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.FinishDateBefore(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("finishDate:(id:123,condition:before)");
@@ -471,7 +477,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.FinishDateAfter(By.Build.Id(123));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("finishDate:(id:123,condition:after)");
@@ -484,7 +490,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.FinishDateBefore(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("finishDate:(date:20130305T170030%2B0000,condition:before)");
@@ -497,7 +503,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var locator = By.Build.FinishDateAfter(new DateTime(2013, 03, 05, 17, 00, 30, DateTimeKind.Utc));
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("finishDate:(date:20130305T170030%2B0000,condition:after)");

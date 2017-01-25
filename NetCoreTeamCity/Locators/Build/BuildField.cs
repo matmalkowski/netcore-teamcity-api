@@ -11,6 +11,12 @@ namespace NetCoreTeamCity.Locators.Build
             _fields = new List<string>() { "buildTypeId", "href", "id", "number", "state", "status", "webUrl" };
         }
 
+        public BuildField QueuedDate()
+        {
+            _fields.Add("queuedDate");
+            return this;
+        }
+
         public BuildField StartDate()
         {
             _fields.Add("startDate");

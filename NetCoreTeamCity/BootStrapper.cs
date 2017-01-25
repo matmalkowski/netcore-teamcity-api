@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core.Activators.Reflection;
 using System.Linq;
 using System.Reflection;
 

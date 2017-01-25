@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NetCoreTeamCity.Api;
+using NetCoreTeamCity.Locators;
 using NUnit.Framework;
 
 namespace NetCoreTeamCity.Tests.Locators.User
@@ -14,7 +15,7 @@ namespace NetCoreTeamCity.Tests.Locators.User
             var locator = By.User.Id(123);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("id:123");
@@ -27,7 +28,7 @@ namespace NetCoreTeamCity.Tests.Locators.User
             var locator = By.User.Name("123");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("name:123");

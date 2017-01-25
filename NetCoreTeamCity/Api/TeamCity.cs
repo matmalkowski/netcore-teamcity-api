@@ -1,4 +1,5 @@
-﻿using NetCoreTeamCity.Clients;
+﻿using System;
+using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Services;
 
 namespace NetCoreTeamCity.Api
@@ -9,9 +10,13 @@ namespace NetCoreTeamCity.Api
         {
             var connectionConfig = new TeamCityConnectionSettingsBuilder().ToHost(host).UsingSSL().AsUser(userName, password).Build();
             var bootstrapper = new BootStrapper(connectionConfig);
+
             Builds = bootstrapper.Get<IBuildService>();
+            QueuedBuilds = bootstrapper.Get<IQueuedBuildService>();
         }
 
         public IBuildService Builds { get; }
+
+        public IQueuedBuildService QueuedBuilds { get; }
     }
 }

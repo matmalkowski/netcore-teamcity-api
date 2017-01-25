@@ -10,7 +10,7 @@ using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Locators.Build
 {
-    public class BuildLocator
+    public class BuildLocator : ILocator
     {
         private readonly List<ApiLocator> _locators;
 
@@ -45,7 +45,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator BuildType(BuildConfigurationLocator buildTypeLocator)
         {
-            _locators.Add(new ApiLocator("buildType", $"({buildTypeLocator.GetLocatorQueryString()})"));
+            _locators.Add(new ApiLocator((buildTypeLocator as ILocator).GetLocatorQueryString()));
             return this;
         }
 
@@ -71,7 +71,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator User(UserLocator userLocator)
         {
-            _locators.Add(new ApiLocator("user", $"({userLocator.GetLocatorQueryString()})"));
+            _locators.Add(new ApiLocator("user", $"({(userLocator as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
@@ -129,7 +129,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator Branch(BranchLocator branchLocator)
         {
-            _locators.Add(new ApiLocator("branch", $"({branchLocator.GetLocatorQueryString()})"));
+            _locators.Add(new ApiLocator("branch", $"({(branchLocator as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
@@ -147,7 +147,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator SinceBuild(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("sinceBuild", $"({buildLocator.GetLocatorQueryString()})"));
+            _locators.Add(new ApiLocator("sinceBuild", $"({(buildLocator as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
@@ -159,13 +159,13 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator QueuedDateBefore(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("queuedDate", $"({buildLocator.GetLocatorQueryString()},condition:before)"));
+            _locators.Add(new ApiLocator("queuedDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:before)"));
             return this;
         }
 
         public BuildLocator QueuedDateAfter(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("queuedDate", $"({buildLocator.GetLocatorQueryString()},condition:after)"));
+            _locators.Add(new ApiLocator("queuedDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:after)"));
             return this;
         }
 
@@ -183,13 +183,13 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator StartDateBefore(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("startDate", $"({buildLocator.GetLocatorQueryString()},condition:before)"));
+            _locators.Add(new ApiLocator("startDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:before)"));
             return this;
         }
 
         public BuildLocator StartDateAfter(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("startDate", $"({buildLocator.GetLocatorQueryString()},condition:after)"));
+            _locators.Add(new ApiLocator("startDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:after)"));
             return this;
         }
 
@@ -207,13 +207,13 @@ namespace NetCoreTeamCity.Locators.Build
         
         public BuildLocator FinishDateBefore(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("finishDate", $"({buildLocator.GetLocatorQueryString()},condition:before)"));
+            _locators.Add(new ApiLocator("finishDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:before)"));
             return this;
         }
 
         public BuildLocator FinishDateAfter(BuildLocator buildLocator)
         {
-            _locators.Add(new ApiLocator("finishDate", $"({buildLocator.GetLocatorQueryString()},condition:after)"));
+            _locators.Add(new ApiLocator("finishDate", $"({(buildLocator as ILocator).GetLocatorQueryString()},condition:after)"));
             return this;
         }
 
@@ -229,7 +229,7 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
-        internal string GetLocatorQueryString()
+        string ILocator.GetLocatorQueryString()
         {
             return string.Join(",", _locators.Select(l => l.Value));
         }

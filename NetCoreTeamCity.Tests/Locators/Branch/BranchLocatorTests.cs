@@ -14,7 +14,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
             var locator = By.Branch.Name("123");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("name:123");
@@ -29,7 +29,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
             var locator = By.Branch.Default(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"default:{flag.ToString().ToLower()}");
@@ -44,7 +44,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
             var locator = By.Branch.Branched(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"branched:{flag.ToString().ToLower()}");
@@ -59,7 +59,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
             var locator = By.Branch.Unspecified(flag);
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be($"unspecified:{flag.ToString().ToLower()}");
@@ -72,7 +72,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
             var locator = By.Branch.Unspecified(Flag.Any).Name("123");
 
             // Act
-            var query = locator.GetLocatorQueryString();
+            var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
             query.Should().Be("unspecified:any,name:123");

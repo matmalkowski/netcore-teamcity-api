@@ -8,6 +8,19 @@ namespace NetCoreTeamCity.Tests.Locators.Build
     public class BuildFieldTests
     {
         [Test]
+        public void Include_QueuedDate()
+        {
+            // Arrange
+            var fields = Include.Build.QueuedDate();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,queuedDate)");
+        }
+
+        [Test]
         public void Include_StartDate()
         {
             // Arrange
