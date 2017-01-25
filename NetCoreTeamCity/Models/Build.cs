@@ -13,9 +13,9 @@ namespace NetCoreTeamCity.Models
         public string Href { get; set; }
         public string WebUrl { get; set; }
         public string StatusText { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
-        public DateTime QueuedDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? FinishDate { get; set; }
+        public DateTime? QueuedDate { get; set; }
         public BuildConfiguration BuildType { get; set; }
         public Triggered Triggered { get; set; }
         public IList<Change> LastChanges { get; set; }

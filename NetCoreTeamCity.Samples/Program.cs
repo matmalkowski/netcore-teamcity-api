@@ -9,9 +9,18 @@ namespace NetCoreTeamCity.Samples
         public static void Main(string[] args)
         {
             var teamCity = new TeamCity(args[0], args[1], args[2]);
-            //var b = teamCity.Builds.Get(412910);
-            var b = teamCity.Builds.Find(By.Build.QueuedDateAfter(DateTime.Now.AddDays(-1)), Include.Build.BuildType().Triggered().LastChanges().Agent().Properties());
-            Console.WriteLine(b.ToString());
+
+            var builds = teamCity.Builds.Find(
+                By.Build.QueuedDateAfter(DateTime.Now.AddDays(-1)), 
+                Include.Build
+                    .BuildType()
+                    .Triggered()
+                    .LastChanges()
+                    .Agent()
+                    .Properties())
+                ;
+
+            var queuedBuilds = teamCity.QueuedBuilds.Find(Include.Build.QueuedDate());
             Console.ReadLine();
         }
     }
