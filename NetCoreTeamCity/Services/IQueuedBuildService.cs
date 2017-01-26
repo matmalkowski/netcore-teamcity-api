@@ -12,5 +12,6 @@ namespace NetCoreTeamCity.Services
         IList<Build> Find(BuildConfigurationLocator locator, BuildField fields = null, int count = 100);
         IList<Build> Find(ProjectLocator locator, BuildField fields = null, int count = 100);
         IList<Build> Find(BuildField fields = null, int count = 100);
+        IList<Agent> CompatibleAgents(long buildId);
     }
 }

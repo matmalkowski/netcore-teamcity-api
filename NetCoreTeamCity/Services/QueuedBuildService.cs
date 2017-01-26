@@ -4,6 +4,7 @@ using NetCoreTeamCity.Models;
 using NetCoreTeamCity.Locators.BuildConfiguration;
 using NetCoreTeamCity.Locators.Project;
 using NetCoreTeamCity.Clients;
+using System.Linq;
 
 namespace NetCoreTeamCity.Services
 {
@@ -34,6 +35,13 @@ namespace NetCoreTeamCity.Services
         {
             var query = GetQuery(locator, fields, count);
             return Find(Endpoint, query);
+        }
+
+        public IList<Agent> CompatibleAgents(long buildId)
+        {
+            var query = $"{Endpoint}/{buildId}/compatibleAgents";
+            var agents = ApiClient.Get<Agents>(query);
+            return agents.Agent == null ? new List<Agent>() : agents.Agent.Select(b => b).ToList();
         }
     }
 }

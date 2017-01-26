@@ -11,18 +11,18 @@ namespace NetCoreTeamCity.Services
 {
     internal abstract class BaseBuildService
     {
-        private readonly ITeamCityApiClient _apiClient;
+        protected readonly ITeamCityApiClient ApiClient;
 
         protected BaseBuildService(ITeamCityApiClient apiClient)
         {
-            _apiClient = apiClient;
+            ApiClient = apiClient;
         }
 
         protected Build Get(string endpoint, long id)
         {
             try
             {
-                return _apiClient.Get<BuildModel>($"{endpoint}/id:{id}").Convert();
+                return ApiClient.Get<BuildModel>($"{endpoint}/id:{id}").Convert();
             }
             catch (HttpException exception)
             {
@@ -32,7 +32,7 @@ namespace NetCoreTeamCity.Services
         }
         protected IList<Build> Find(string endpoint, string query)
         {
-            var builds = _apiClient.Get<Builds>($"{endpoint}{query}");
+            var builds = ApiClient.Get<Builds>($"{endpoint}{query}");
             return builds.Build == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
         }
 

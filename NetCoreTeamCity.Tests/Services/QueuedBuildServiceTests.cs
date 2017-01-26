@@ -205,5 +205,40 @@ namespace NetCoreTeamCity.Tests.Services
             builds.Count.Should().Be(1);
             builds[0].Id.Should().Be(1);
         }
+
+        [Test]
+        public void GetCompatibleAgents_AgentsFound()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<Agents>("buildQueue/123/compatibleAgents"))
+                .Returns(new Agents() { Agent = new List<Agent> { new Agent() { Id = 1 } , new Agent() { Id = 2 } } });
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var agents = queuedBuildService.CompatibleAgents(123);
+
+            // Assert
+            agents.Count.Should().Be(2);
+            agents[0].Id.Should().Be(1);
+        }
+
+        [Test]
+        public void GetCompatibleAgents_AgentsNotFound()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<Agents>("buildQueue/123/compatibleAgents"))
+                .Returns(new Agents());
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var agents = queuedBuildService.CompatibleAgents(123);
+
+            // Assert
+            agents.Count.Should().Be(0);
+        }
     }
 }
