@@ -23,5 +23,6 @@ namespace NetCoreTeamCity.Models
         public Agent Agent { get; set; }
         public IList<Property> Properties { get; set; }
         public TestOccurrences TestOccurrences { get; set; }
+        public BuildComment Comment { get; set; }
     }
 }

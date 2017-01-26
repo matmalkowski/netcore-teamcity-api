@@ -1,7 +1,8 @@
 {
-  "version": "1.0.0-*",
-  "buildOptions": {
-    "emitEntryPoint": true
+  "version": "0.1.0-beta-*",
+  "packOptions": {
+    "licenseUrl": "https://github.com/monkey3310/netcore-teamcity-api/blob/master/LICENSE",
+    "projectUrl": "https://github.com/monkey3310/netcore-teamcity-api/"
   },
 
   "dependencies": {
@@ -9,7 +10,7 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "NetCoreTeamCity": "1.0.0-*"
+    "NetCoreTeamCity": "0.1.0-beta-*"
   },
 
   "frameworks": {
