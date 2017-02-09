@@ -15,6 +15,7 @@ namespace NetCoreTeamCity.Models
         [JsonConverter(typeof(StringEnumConverter))]
         public BuildState? State { get; set; }
 
+        public string BranchName { get; set; }
         public string BuildTypeId { get; set; }
         public string Href { get; set; }
         public string WebUrl { get; set; }
@@ -29,5 +30,6 @@ namespace NetCoreTeamCity.Models
         public Agent Agent { get; set; }
         public Properties Properties { get; set; }
         public TestOccurrences TestOccurrences { get; set; }
+        public BuildComment Comment { get; set; }
     }
 }

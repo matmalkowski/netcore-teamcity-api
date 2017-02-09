@@ -1,4 +1,6 @@
-﻿namespace NetCoreTeamCity.Models
+﻿using System.ComponentModel;
+
+namespace NetCoreTeamCity.Models
 {
     public static class BuildModelToBuildConventer
     {
@@ -10,6 +12,7 @@
                 Number = model.Number,
                 Status = model.Status,
                 State = model.State,
+                BranchName = model.BranchName,
                 BuildTypeId = model.BuildTypeId,
                 Href = model.Href,
                 WebUrl = model.WebUrl,
@@ -20,7 +23,8 @@
                 BuildType = model.BuildType,
                 Triggered = model.Triggered,
                 Agent = model.Agent,
-                TestOccurrences = model.TestOccurrences
+                TestOccurrences = model.TestOccurrences,
+                Comment = model.Comment
             };
 
             if (model.LastChanges?.Change != null)

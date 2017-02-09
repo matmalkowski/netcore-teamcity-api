@@ -19,6 +19,7 @@ namespace NetCoreTeamCity.Tests.Models
                 Number = "1.2.3",
                 Status = BuildStatus.Success,
                 State = BuildState.Finished,
+                BranchName = "testBranch",
                 BuildTypeId = "testType",
                 Href = "href",
                 WebUrl = "url",
@@ -29,7 +30,16 @@ namespace NetCoreTeamCity.Tests.Models
                 BuildType = new BuildConfiguration {Description = "buildTypeDescription"},
                 Triggered = new Triggered {Date = new DateTime(2000, 1, 1)},
                 Agent = new Agent {Id = 123},
-                TestOccurrences = new TestOccurrences { Count = 123 }
+                TestOccurrences = new TestOccurrences { Count = 123 },
+                Comment = new BuildComment
+                {
+                    Timestamp = new DateTime(2000, 1, 3),
+                    Text = "test",
+                    User = new User
+                    {
+                        Name = "testUserName"
+                    }
+                }
             };
 
             // Act
@@ -40,6 +50,7 @@ namespace NetCoreTeamCity.Tests.Models
             build.Number.Should().Be("1.2.3");
             build.Status.Should().Be(BuildStatus.Success);
             build.State.Should().Be(BuildState.Finished);
+            build.BranchName.Should().Be("testBranch");
             build.BuildTypeId.Should().Be("testType");
             build.Href.Should().Be("href");
             build.StatusText.Should().Be("status");
@@ -50,6 +61,8 @@ namespace NetCoreTeamCity.Tests.Models
             build.Triggered.Date.Should().Be(new DateTime(2000, 1, 1));
             build.Agent.Id.Should().Be(123);
             build.TestOccurrences.Count.Should().Be(123);
+            build.Comment.Text.Should().Be("test");
+            build.Comment.User.Name.Should().Be("testUserName");
         }
 
         [Test]

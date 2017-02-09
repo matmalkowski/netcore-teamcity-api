@@ -9,6 +9,8 @@ namespace NetCoreTeamCity.Models
         public string Number { get; set; }
         public BuildStatus? Status { get; set; }
         public BuildState? State { get; set; }
+        public string BranchName { get; set; }
+
         public string BuildTypeId { get; set; }
         public string Href { get; set; }
         public string WebUrl { get; set; }

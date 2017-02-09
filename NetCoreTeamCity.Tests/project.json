@@ -12,7 +12,7 @@
     },
     "FakeItEasy": "3.0.0-beta002-build000066",
     "FluentAssertions": "4.18.0",
-    "NetCoreTeamCity": "0.1.0-beta-*",
+    "NetCoreTeamCity": "0.1.0-beta",
     "NETStandard.Library": "1.6.0",
     "NUnit": "3.6.0",
     "dotnet-test-nunit": "3.4.0-beta-3",

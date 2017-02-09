@@ -39,6 +39,39 @@ namespace NetCoreTeamCity.Clients
             }
         }
 
+        public T Post<T>(string url, T obj)
+        {
+            using (var client = GetHttpClient())
+            {
+                string content;
+                if (_teamCityConnectionSettings.FavorJsonOverXml)
+                {
+                    content = JsonConvert.SerializeObject(obj, new TeamCityDateTimeConventer());
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+
+                var response = client.Post(GetRequestUri(url), new StringContent(content));
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    ThrowHttpException(response, GetRequestUri(url));
+                }
+
+                if (_teamCityConnectionSettings.FavorJsonOverXml)
+                {
+                    var jsonStringConent = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<T>(jsonStringConent, new TeamCityDateTimeConventer());
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
         private string RequestContentType => _teamCityConnectionSettings.FavorJsonOverXml ? HttpContentType.Json : HttpContentType.Xml;
 
         private string GetRequestUri(string url)

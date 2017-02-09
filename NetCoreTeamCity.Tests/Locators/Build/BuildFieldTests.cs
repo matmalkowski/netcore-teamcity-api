@@ -8,6 +8,20 @@ namespace NetCoreTeamCity.Tests.Locators.Build
     public class BuildFieldTests
     {
         [Test]
+        public void Include_BranchName()
+        {
+            // Arrange
+            var fields = Include.Build.BranchName();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,branchName)");
+        }
+
+
+        [Test]
         public void Include_QueuedDate()
         {
             // Arrange
