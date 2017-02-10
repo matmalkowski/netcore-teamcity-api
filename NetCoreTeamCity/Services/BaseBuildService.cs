@@ -30,10 +30,16 @@ namespace NetCoreTeamCity.Services
                 throw;
             }
         }
+
         protected IList<Build> Find(string endpoint, string query)
         {
             var builds = ApiClient.Get<Builds>($"{endpoint}{query}");
             return builds.Build == null ? new List<Build>() : builds.Build.Select(b => b.Convert()).ToList();
+        }
+
+        protected Build AddToQueue(string endpoint, BuildModel buildModel)
+        {
+            return ApiClient.Post(endpoint, buildModel).Convert();
         }
 
         protected string GetQuery(ILocator locator, BuildField fields = null, int count = 100)

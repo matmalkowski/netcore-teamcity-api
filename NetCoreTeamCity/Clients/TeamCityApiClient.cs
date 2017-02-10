@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using NetCoreTeamCity.Exceptions;
 using NetCoreTeamCity.Helpers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace NetCoreTeamCity.Clients
 {
@@ -46,14 +48,18 @@ namespace NetCoreTeamCity.Clients
                 string content;
                 if (_teamCityConnectionSettings.FavorJsonOverXml)
                 {
-                    content = JsonConvert.SerializeObject(obj, new TeamCityDateTimeConventer());
+                    content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                        DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
+                    });
                 }
                 else
                 {
                     throw new NotImplementedException();
                 }
 
-                var response = client.Post(GetRequestUri(url), new StringContent(content));
+                var response = client.Post(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType));
 
                 if (!response.IsSuccessStatusCode)
                 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Models;
 using NetCoreTeamCity.Locators.BuildConfiguration;
@@ -42,6 +43,32 @@ namespace NetCoreTeamCity.Services
             var query = $"{Endpoint}/{buildId}/compatibleAgents";
             var agents = ApiClient.Get<Agents>(query);
             return agents.Agent == null ? new List<Agent>() : agents.Agent.Select(b => b).ToList();
+        }
+
+        public Build Run(string buildTypeId, string branchName = null, string comment = null)
+        {
+            var build = new BuildModel
+            {
+                BuildTypeId = buildTypeId,
+                BuildType = new BuildConfiguration
+                {
+                    Id = buildTypeId
+                }
+            };
+
+            if (!string.IsNullOrEmpty(branchName))
+                build.BranchName = branchName;
+            if (!string.IsNullOrEmpty(comment))
+            {
+                build.Comment = new BuildComment { Text = comment };
+            }
+
+            return AddToQueue(Endpoint, build);
+        }
+
+        public Build Run(BuildRunOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }
