@@ -280,5 +280,26 @@ namespace NetCoreTeamCity.Tests.Services
             build.BranchName.Should().Be("testBranchName");
             build.Comment.Should().BeNull();
         }
+
+        [Test]
+        public void EnqueueBuild_WithBuildTypeAndBranchAndComment_QueuedBuildReturned()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildModel>("buildQueue", A<BuildModel>.That.Matches(
+                b => b.BuildTypeId == "testBuildType" && b.BranchName == "testBranchName" && b.Comment.Text == "testComment")))
+                .Returns(new BuildModel(){BuildTypeId = "testBuildType", Id = 123, BranchName = "testBranchName", Comment = new BuildComment(){Text = "testComment"}});
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var build = queuedBuildService.Run("testBuildType", "testBranchName", "testComment");
+
+            // Assert
+            build.Id.Should().Be(123);
+            build.BuildTypeId.Should().Be("testBuildType");
+            build.BranchName.Should().Be("testBranchName");
+            build.Comment.Text.Should().Be("testComment");
+        }
     }
 }
