@@ -240,5 +240,45 @@ namespace NetCoreTeamCity.Tests.Services
             // Assert
             agents.Count.Should().Be(0);
         }
+
+        [Test]
+        public void EnqueueBuild_WithBuildType_QueuedBuildReturned()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildModel>("buildQueue", A<BuildModel>.That.Matches(b => b.BuildTypeId == "testBuildType")))
+                .Returns(new BuildModel(){BuildTypeId = "testBuildType", Id = 123});
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var build = queuedBuildService.Run("testBuildType");
+
+            // Assert
+            build.Id.Should().Be(123);
+            build.BuildTypeId.Should().Be("testBuildType");
+            build.BranchName.Should().BeNullOrEmpty();
+            build.Comment.Should().BeNull();
+        }
+
+        [Test]
+        public void EnqueueBuild_WithBuildTypeAndBranch_QueuedBuildReturned()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildModel>("buildQueue", A<BuildModel>.That.Matches(b => (b.BuildTypeId == "testBuildType") && b.BranchName == "testBranchName")))
+                .Returns(new BuildModel(){BuildTypeId = "testBuildType", Id = 123, BranchName = "testBranchName"});
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var build = queuedBuildService.Run("testBuildType", "testBranchName");
+
+            // Assert
+            build.Id.Should().Be(123);
+            build.BuildTypeId.Should().Be("testBuildType");
+            build.BranchName.Should().Be("testBranchName");
+            build.Comment.Should().BeNull();
+        }
     }
 }

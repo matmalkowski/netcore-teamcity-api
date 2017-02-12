@@ -7,7 +7,7 @@
 
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "version": "1.0.1",
+      "version": "1.1.0",
       "type": "platform"
     },
     "FakeItEasy": "3.0.0-beta002-build000066",
@@ -16,7 +16,7 @@
     "NUnit": "3.6.0",
     "dotnet-test-nunit": "3.4.0-beta-3",
     "Newtonsoft.Json": "9.0.1",
-    "NetCoreTeamCity": "0.1.0-beta-*"
+    "NetCoreTeamCity": "0.1.0-beta"
   },
 
   "frameworks": {
