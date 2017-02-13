@@ -338,5 +338,20 @@ namespace NetCoreTeamCity.Tests.Services
 
         }
 
+        [Test]
+        public void CancelQueuedBuild()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            var buildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            buildService.Cancel(123, "Test");
+
+            // Assert
+            A.CallTo(() => teamCityApiClient.Post("buildQueue/123", A<BuildCancelRequest>.Ignored))
+                .MustHaveHappened();
+        }
+
     }
 }

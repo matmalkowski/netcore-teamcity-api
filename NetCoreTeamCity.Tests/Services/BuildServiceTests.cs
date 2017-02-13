@@ -152,5 +152,20 @@ namespace NetCoreTeamCity.Tests.Services
             builds.Count.Should().Be(1);
             builds[0].Id.Should().Be(1);
         }
+
+        [Test]
+        public void CancelRunningBuild()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            var buildService = new BuildService(teamCityApiClient);
+
+            // Act
+            buildService.Stop(123, "Test");
+
+            // Assert
+            A.CallTo(() => teamCityApiClient.Post("builds/123", A<BuildCancelRequest>.Ignored))
+                .MustHaveHappened();
+        }
     }
 }

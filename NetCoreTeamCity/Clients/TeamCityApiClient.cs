@@ -43,6 +43,11 @@ namespace NetCoreTeamCity.Clients
 
         public T Post<T>(string url, T obj)
         {
+            return Post<T, T>(url, obj);
+        }
+
+        public T2 Post<T1, T2>(string url, T1 obj)
+        {
             using (var client = GetHttpClient())
             {
                 string content;
@@ -68,8 +73,8 @@ namespace NetCoreTeamCity.Clients
 
                 if (_teamCityConnectionSettings.FavorJsonOverXml)
                 {
-                    var jsonStringConent = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<T>(jsonStringConent, new TeamCityDateTimeConventer());
+                    var jsonStringContent = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<T2>(jsonStringContent, new TeamCityDateTimeConventer());
                 }
                 else
                 {

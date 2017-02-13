@@ -42,6 +42,11 @@ namespace NetCoreTeamCity.Services
             return ApiClient.Post(endpoint, buildModel).Convert();
         }
 
+        protected Build CancelBuild(string endpoint, long buildId, string comment, bool reAddToTheQueue)
+        {
+            return ApiClient.Post<BuildCancelRequest, BuildModel>($"{endpoint}/{buildId}", new BuildCancelRequest {Comment = comment, ReAddIntoQueue = reAddToTheQueue}).Convert();
+        }
+
         protected string GetQuery(ILocator locator, BuildField fields = null, int count = 100)
         {
             var query = $"?locator=count:{count}";

@@ -4,6 +4,7 @@
     {
         Success,
         Failure,
-        Error
+        Error,
+        Unknown
     }
 }

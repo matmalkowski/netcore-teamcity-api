@@ -65,5 +65,11 @@ namespace NetCoreTeamCity.Services
                 throw new ArgumentNullException(nameof(options));
             return AddToQueue(Endpoint, options.GetBuildModel());
         }
+
+        public Build Cancel(long buildId, string comment, bool reAddToTheQueue = false)
+        {
+            return CancelBuild(Endpoint, buildId, comment, reAddToTheQueue);
+        }
+
     }
 }

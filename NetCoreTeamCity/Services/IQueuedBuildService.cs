@@ -15,5 +15,7 @@ namespace NetCoreTeamCity.Services
         IList<Agent> CompatibleAgents(long buildId);
         Build Run(string buildTypeId, string branchName = null, string comment = null);
         Build Run(BuildRunOptions options);
+        Build Cancel(long buildId, string comment, bool reAddToTheQueue = false);
+
     }
 }

@@ -29,5 +29,10 @@ namespace NetCoreTeamCity.Services
             var query = GetQuery(null, fields, count);
             return Find(Endpoint, query);
         }
+
+        public Build Stop(long buildId, string comment, bool reAddToTheQueue = false)
+        {
+            return CancelBuild(Endpoint, buildId, comment, reAddToTheQueue);
+        }
     }
 }
