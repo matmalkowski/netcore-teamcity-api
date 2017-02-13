@@ -47,24 +47,23 @@ namespace NetCoreTeamCity.Services
 
         public Build Run(string buildTypeId, string branchName = null, string comment = null)
         {
-            var build = new BuildModel
-            {
-                BuildTypeId = buildTypeId
-            };
+            var optionsBuilder = new BuildRunOptions().BuildType(buildTypeId);
 
             if (!string.IsNullOrEmpty(branchName))
-                build.BranchName = branchName;
+                optionsBuilder = optionsBuilder.Branch(branchName);
             if (!string.IsNullOrEmpty(comment))
             {
-                build.Comment = new BuildComment { Text = comment };
+                optionsBuilder = optionsBuilder.Comment(comment);
             }
 
-            return AddToQueue(Endpoint, build);
+            return AddToQueue(Endpoint, optionsBuilder.GetBuildModel());
         }
 
         public Build Run(BuildRunOptions options)
         {
-            throw new NotImplementedException();
+            if (options == null) 
+                throw new ArgumentNullException(nameof(options));
+            return AddToQueue(Endpoint, options.GetBuildModel());
         }
     }
 }

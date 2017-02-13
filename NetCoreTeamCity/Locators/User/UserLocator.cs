@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NetCoreTeamCity.Locators.User
+﻿namespace NetCoreTeamCity.Locators.User
 {
     public class UserLocator : ILocator
     {

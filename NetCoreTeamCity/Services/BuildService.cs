@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Models;
-using NetCoreTeamCity.Locators;
 
 namespace NetCoreTeamCity.Services
 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using FakeItEasy;
 using FluentAssertions;
@@ -301,5 +302,41 @@ namespace NetCoreTeamCity.Tests.Services
             build.BranchName.Should().Be("testBranchName");
             build.Comment.Text.Should().Be("testComment");
         }
+
+        [Test]
+        public void EnqueueBuild_WithTriggerOptionsAndComment_QueuedBuildReturned()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildModel>("buildQueue", A<BuildModel>.That.Matches(
+                b => b.BuildTypeId == "testBuildType" && b.BranchName == "testBranchName" && b.Comment.Text == "testComment" && b.TriggeringOptions.CleanSources == true)))
+                .Returns(new BuildModel() { BuildTypeId = "testBuildType", Id = 123, BranchName = "testBranchName", Comment = new BuildComment() { Text = "testComment" } });
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            var build = queuedBuildService.Run(BuildRun.Options.BuildType("testBuildType").Branch("testBranchName").Comment("testComment").CleanSources());
+
+            // Assert
+            build.Id.Should().Be(123);
+            build.BuildTypeId.Should().Be("testBuildType");
+            build.BranchName.Should().Be("testBranchName");
+            build.Comment.Text.Should().Be("testComment");
+        }
+
+        [Test]
+        public void EnqueueBuild_NoOptionsPassed_ExceptionThrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            Action action = () => queuedBuildService.Run(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+
+        }
+
     }
 }

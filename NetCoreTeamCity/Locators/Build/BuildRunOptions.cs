@@ -10,8 +10,11 @@ namespace NetCoreTeamCity.Locators.Build
 
         internal BuildRunOptions()
         {
-            _model = new BuildModel();
-            _model.Properties = new Properties {Property = new List<Property>()};
+            _model = new BuildModel
+            {
+                Properties = new Properties {Property = new List<Property>()},
+                TriggeringOptions = new BuildTriggeringOptions()
+            };
         }
 
         public BuildRunOptions BuildType(string buildTypeId)
@@ -60,17 +63,26 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildRunOptions OnSpecificChange(int changeId)
         {
-            throw new NotImplementedException();
+            _model.LastChanges = new LastChanges() {Change = new List<Change> {new Change {Id = changeId}}};
+            return this;
+        }
+
+        public BuildRunOptions CleanSources()
+        {
+            _model.TriggeringOptions.CleanSources = true;
+            return this;
         }
 
         public BuildRunOptions ForceRebuildAllDependencies()
         {
-            throw new NotImplementedException();
+            _model.TriggeringOptions.RebuildAllDependencies = true;
+            return this;
         }
 
         public BuildRunOptions MoveToTopOfQueue()
         {
-            throw new NotImplementedException();
+            _model.TriggeringOptions.QueueAtTop = true;
+            return this;
         }
 
         internal BuildModel GetBuildModel()

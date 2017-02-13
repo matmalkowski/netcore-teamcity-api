@@ -15,21 +15,23 @@ namespace NetCoreTeamCity.Tests.Clients
     [TestFixture]
     public class TeamCityApiClientTests
     {
-        private readonly DateTime DateUnderTest = new DateTime(2000, 12, 31, 1, 2, 3);
-        private HttpResponseMessage JsonResponseWithOkStatus;
-        private HttpResponseMessage JsonResponseWithErrorStatus;
+        private readonly DateTime _dateUnderTest = new DateTime(2000, 12, 31, 1, 2, 3);
+        private HttpResponseMessage _jsonResponseWithOkStatus;
+        private HttpResponseMessage _jsonResponseWithErrorStatus;
+        private StringContent _buildAsSerializedStringContent;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            var build = new BuildModel { BuildTypeId = "test", FinishDate = DateUnderTest };
-            JsonResponseWithOkStatus = new HttpResponseMessage(HttpStatusCode.OK)
+            var build = new BuildModel { BuildTypeId = "test", FinishDate = _dateUnderTest };
+            _buildAsSerializedStringContent = new StringContent(JsonConvert.SerializeObject(build, new TeamCityDateTimeConventer()));
+            _jsonResponseWithOkStatus = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(build, new TeamCityDateTimeConventer()))
+                Content = _buildAsSerializedStringContent
             };
-            JsonResponseWithErrorStatus = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            _jsonResponseWithErrorStatus = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(build, new TeamCityDateTimeConventer()))
+                Content = _buildAsSerializedStringContent
             };
         }
 
@@ -39,7 +41,7 @@ namespace NetCoreTeamCity.Tests.Clients
             // Arrange
             var httpClient = A.Fake<IHttpClientWrapper>();
             A.CallTo(() => httpClient.Get("https://fake/guestAuth/app/rest/test", "application/json"))
-                .Returns(JsonResponseWithOkStatus);
+                .Returns(_jsonResponseWithOkStatus);
             var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
             A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
 
@@ -52,7 +54,7 @@ namespace NetCoreTeamCity.Tests.Clients
             // Assert
             result.Should().NotBeNull();
             result.BuildTypeId.Should().Be("test");
-            result.FinishDate.Should().Be(DateUnderTest);
+            result.FinishDate.Should().Be(_dateUnderTest);
         }
 
         [Test]
@@ -61,7 +63,7 @@ namespace NetCoreTeamCity.Tests.Clients
             // Arrange
             var httpClient = A.Fake<IHttpClientWrapper>();
             A.CallTo(() => httpClient.Get("https://fake/httpAuth/app/rest/test", "application/json"))
-                .Returns(JsonResponseWithOkStatus);
+                .Returns(_jsonResponseWithOkStatus);
             var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
             A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
 
@@ -74,7 +76,7 @@ namespace NetCoreTeamCity.Tests.Clients
             // Assert
             result.Should().NotBeNull();
             result.BuildTypeId.Should().Be("test");
-            result.FinishDate.Should().Be(DateUnderTest);
+            result.FinishDate.Should().Be(_dateUnderTest);
         }
 
         [Test]
@@ -83,7 +85,7 @@ namespace NetCoreTeamCity.Tests.Clients
             // Arrange
             var httpClient = A.Fake<IHttpClientWrapper>();
             A.CallTo(() => httpClient.Get("https://fake/guestAuth/app/rest/test", "application/json"))
-                .Returns(JsonResponseWithErrorStatus);
+                .Returns(_jsonResponseWithErrorStatus);
             var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
             A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
 
@@ -112,6 +114,28 @@ namespace NetCoreTeamCity.Tests.Clients
 
             // Assert
             action.ShouldThrow<ArgumentException>().Which.Message.Should().Be("When connecting as guest you must specify username and password");
+        }
+
+        [Test]
+        public void PostCall_SerializedObjectPassedInCall_DeserializedObjectReturned()
+        {
+            // Arrange
+            var httpClient = A.Fake<IHttpClientWrapper>();
+            A.CallTo(() => httpClient.Post("https://fake/guestAuth/app/rest/test", A<StringContent>.That.Matches(c => c.ReadAsStringAsync().Result.Contains("testObjectSerialization")), "application/json"))
+                .Returns(_jsonResponseWithOkStatus);
+            var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
+            A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
+
+            var settings = new TeamCityConnectionSettings(new Uri("https://fake"), true, "guest", string.Empty, true);
+            var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
+
+            // Act
+            var result = tcApiClient.Post("test", new BuildModel { BuildTypeId = "testObjectSerialization", FinishDate = _dateUnderTest });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.BuildTypeId.Should().Be("test");
+            result.FinishDate.Should().Be(_dateUnderTest);
         }
     }
 }

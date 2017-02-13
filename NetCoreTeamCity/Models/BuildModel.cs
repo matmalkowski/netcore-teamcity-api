@@ -4,7 +4,7 @@ using System;
 
 namespace NetCoreTeamCity.Models
 {
-    public class BuildModel
+    internal class BuildModel
     {
         public long Id { get; set; }
         public string Number { get; set; }
@@ -32,5 +32,6 @@ namespace NetCoreTeamCity.Models
         public TestOccurrences TestOccurrences { get; set; }
         public BuildComment Comment { get; set; }
         public bool Personal { get; set; }
+        public BuildTriggeringOptions TriggeringOptions { get; set; }
     }
 }

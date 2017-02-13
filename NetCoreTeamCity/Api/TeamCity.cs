@@ -1,5 +1,4 @@
-﻿using System;
-using NetCoreTeamCity.Clients;
+﻿using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Services;
 
 namespace NetCoreTeamCity.Api

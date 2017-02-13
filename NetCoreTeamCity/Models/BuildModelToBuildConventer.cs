@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace NetCoreTeamCity.Models
+﻿namespace NetCoreTeamCity.Models
 {
-    public static class BuildModelToBuildConventer
+    internal static class BuildModelToBuildConventer
     {
         public static Build Convert(this BuildModel model)
         {
