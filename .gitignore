@@ -251,3 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 NetCoreTeamCity.Samples/Properties/launchSettings.json
+
+#Visual Studio Code
+.vscode/
