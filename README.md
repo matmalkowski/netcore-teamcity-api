@@ -4,7 +4,11 @@ NetCoreTeamCity is a client library targeting .netcore (.NET Platform 1.6) that 
 way to interact with the [TeamCity API](https://confluence.jetbrains.com/display/TCD10/REST+API). 
 
 # Getting started
-When 0.1.0 version is done, that supports build related endpoint queries and requests, it will be avaiable as a pre-release nuget package
+To start using NetCoreTeamCity in your project, run the following command in the Package Manager Console:
+```
+Install-Package NetCoreTeamCity -Pre
+```
+Note this is still a beta, check first issues to see whats is already implemented and whats comming next.
 
 # Using NetCoreTeamCity
 Basic usage scenario would be getting detailed info of a build with known id:
