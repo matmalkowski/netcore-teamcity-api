@@ -349,7 +349,7 @@ namespace NetCoreTeamCity.Tests.Services
             buildService.Cancel(123, "Test");
 
             // Assert
-            A.CallTo(() => teamCityApiClient.Post("buildQueue/123", A<BuildCancelRequest>.Ignored))
+            A.CallTo(() => teamCityApiClient.Post<BuildCancelRequest, BuildModel>("buildQueue/123", A<BuildCancelRequest>.Ignored))
                 .MustHaveHappened();
         }
 

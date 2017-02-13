@@ -164,7 +164,7 @@ namespace NetCoreTeamCity.Tests.Services
             buildService.Stop(123, "Test");
 
             // Assert
-            A.CallTo(() => teamCityApiClient.Post("builds/123", A<BuildCancelRequest>.Ignored))
+            A.CallTo(() => teamCityApiClient.Post<BuildCancelRequest, BuildModel>("builds/123", A<BuildCancelRequest>.Ignored))
                 .MustHaveHappened();
         }
     }
