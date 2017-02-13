@@ -163,5 +163,31 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             // Assert
             query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,testOccurrences)");
         }
+
+        [Test]
+        public void Include_PersonalFlag()
+        {
+            // Arrange
+            var fields = Include.Build.PersonalFlag();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,personal)");
+        }
+
+        [Test]
+        public void Include_Comment()
+        {
+            // Arrange
+            var fields = Include.Build.Comment();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,comment)");
+        }
     }
 }

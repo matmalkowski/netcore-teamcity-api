@@ -24,7 +24,8 @@ namespace NetCoreTeamCity.Models
                 Triggered = model.Triggered,
                 Agent = model.Agent,
                 TestOccurrences = model.TestOccurrences,
-                Comment = model.Comment
+                Comment = model.Comment,
+                Personal = model.Personal,
             };
 
             if (model.LastChanges?.Change != null)

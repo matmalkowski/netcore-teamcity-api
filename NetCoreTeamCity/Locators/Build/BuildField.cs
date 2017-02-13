@@ -83,6 +83,18 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
+        public BuildField PersonalFlag()
+        {
+            _fields.Add("personal");
+            return this;
+        }
+
+        public BuildField Comment()
+        {
+            _fields.Add("comment");
+            return this;
+        }
+
         internal string GetFieldsQueryString()
         {
             return $"build({string.Join(",", _fields)})";

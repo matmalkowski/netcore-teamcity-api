@@ -39,7 +39,8 @@ namespace NetCoreTeamCity.Tests.Models
                     {
                         Name = "testUserName"
                     }
-                }
+                },
+                Personal = true
             };
 
             // Act
@@ -63,6 +64,7 @@ namespace NetCoreTeamCity.Tests.Models
             build.TestOccurrences.Count.Should().Be(123);
             build.Comment.Text.Should().Be("test");
             build.Comment.User.Name.Should().Be("testUserName");
+            build.Personal.Should().BeTrue();
         }
 
         [Test]

@@ -49,11 +49,7 @@ namespace NetCoreTeamCity.Services
         {
             var build = new BuildModel
             {
-                BuildTypeId = buildTypeId,
-                BuildType = new BuildConfiguration
-                {
-                    Id = buildTypeId
-                }
+                BuildTypeId = buildTypeId
             };
 
             if (!string.IsNullOrEmpty(branchName))
