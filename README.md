@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/wms9wdqb4a109c1h?svg=true)](https://ci.appveyor.com/project/monkey3310/netcore-teamcity-api)
+[![NuGet Pre Release](https://img.shields.io/nuget/vpre/NetCoreTeamCity.svg)](https://www.nuget.org/packages/NetCoreTeamCity/)
 # NetCoreTeamCity - TeamCity client library for .NET Core
 NetCoreTeamCity is a client library targeting .netcore (.NET Platform 1.6) that provides an easy
 way to interact with the [TeamCity API](https://confluence.jetbrains.com/display/TCD10/REST+API). 
