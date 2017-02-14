@@ -24,6 +24,7 @@
                 TestOccurrences = model.TestOccurrences,
                 Comment = model.Comment,
                 Personal = model.Personal,
+                RunningInfo = model.RunningInfo
             };
 
             if (model.LastChanges?.Change != null)

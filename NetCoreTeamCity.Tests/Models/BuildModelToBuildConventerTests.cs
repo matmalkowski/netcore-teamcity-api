@@ -40,7 +40,11 @@ namespace NetCoreTeamCity.Tests.Models
                         Name = "testUserName"
                     }
                 },
-                Personal = true
+                Personal = true,
+                RunningInfo = new BuildRunningInfo
+                {
+                    CurrentStageText = "someText"
+                }
             };
 
             // Act
@@ -65,6 +69,7 @@ namespace NetCoreTeamCity.Tests.Models
             build.Comment.Text.Should().Be("test");
             build.Comment.User.Name.Should().Be("testUserName");
             build.Personal.Should().BeTrue();
+            build.RunningInfo.CurrentStageText.Should().Be("someText");
         }
 
         [Test]

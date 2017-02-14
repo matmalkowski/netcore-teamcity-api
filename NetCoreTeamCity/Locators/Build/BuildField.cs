@@ -95,6 +95,12 @@ namespace NetCoreTeamCity.Locators.Build
             return this;
         }
 
+        public BuildField RunningInfo()
+        {
+            _fields.Add("running-info");
+            return this;
+        }
+
         internal string GetFieldsQueryString()
         {
             return $"build({string.Join(",", _fields)})";

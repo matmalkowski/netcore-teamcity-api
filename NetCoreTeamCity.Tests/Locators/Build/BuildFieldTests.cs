@@ -189,5 +189,18 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             // Assert
             query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,comment)");
         }
+
+        [Test]
+        public void Include_RunningInfo()
+        {
+            // Arrange
+            var fields = Include.Build.RunningInfo();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,running-info)");
+        }
     }
 }

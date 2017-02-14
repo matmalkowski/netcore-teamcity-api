@@ -9,6 +9,8 @@ namespace NetCoreTeamCity.Samples
         {
             var teamCity = new TeamCity(args[0], args[1], args[2]);
 
+            var build = teamCity.Builds.Get(583319);
+
             var builds = teamCity.Builds.Find(
                 By.Build.QueuedDateAfter(DateTime.Now.AddDays(-1)),
                 Include.Build

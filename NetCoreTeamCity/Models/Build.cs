@@ -27,6 +27,7 @@ namespace NetCoreTeamCity.Models
         public TestOccurrences TestOccurrences { get; set; }
         public BuildComment Comment { get; set; }
         public bool Personal { get; set; }
+        public BuildRunningInfo RunningInfo { get; set; }
 
     }
 }

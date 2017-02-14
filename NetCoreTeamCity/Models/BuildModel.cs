@@ -33,5 +33,8 @@ namespace NetCoreTeamCity.Models
         public BuildComment Comment { get; set; }
         public bool Personal { get; set; }
         public BuildTriggeringOptions TriggeringOptions { get; set; }
+
+        [JsonProperty("running-info")]
+        public BuildRunningInfo RunningInfo { get; set; }
     }
 }
