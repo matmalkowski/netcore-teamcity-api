@@ -50,36 +50,53 @@ namespace NetCoreTeamCity.Clients
         {
             using (var client = GetHttpClient())
             {
-                string content;
-                if (_teamCityConnectionSettings.FavorJsonOverXml)
-                {
-                    content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                        DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
-                    });
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
+                return MakeTwoWayRequest<T1, T2>(url, obj, client.Post);
+            }
+        }
 
-                var response = client.Post(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType));
+        public T Put<T>(string url, T obj)
+        {
+            return Put<T, T>(url, obj);
+        }
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    ThrowHttpException(response, GetRequestUri(url));
-                }
+        public T2 Put<T1, T2>(string url, T1 obj)
+        {
+            using (var client = GetHttpClient())
+            {
+                return MakeTwoWayRequest<T1, T2>(url, obj, client.Put);
+            }
+        }
 
-                if (_teamCityConnectionSettings.FavorJsonOverXml)
+        private T2 MakeTwoWayRequest<T1, T2>(string url, T1 obj, Func<string, HttpContent, string, HttpResponseMessage> httpClientMethod)
+        {
+            string content;
+            if (_teamCityConnectionSettings.FavorJsonOverXml)
+            {
+                content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
                 {
-                    var jsonStringContent = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<T2>(jsonStringContent, new TeamCityDateTimeConventer());
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
+                });
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+            var response = httpClientMethod.Invoke(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType), RequestContentType);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ThrowHttpException(response, GetRequestUri(url));
+            }
+
+            if (_teamCityConnectionSettings.FavorJsonOverXml)
+            {
+                var jsonStringContent = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<T2>(jsonStringContent, new TeamCityDateTimeConventer());
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 

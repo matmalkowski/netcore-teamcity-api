@@ -137,5 +137,27 @@ namespace NetCoreTeamCity.Tests.Clients
             result.BuildTypeId.Should().Be("test");
             result.FinishDate.Should().Be(_dateUnderTest);
         }
+
+        [Test]
+        public void PutCall_SerializedObjectPassedInCall_DeserializedObjectReturned()
+        {
+            // Arrange
+            var httpClient = A.Fake<IHttpClientWrapper>();
+            A.CallTo(() => httpClient.Put("https://fake/guestAuth/app/rest/test", A<StringContent>.That.Matches(c => c.ReadAsStringAsync().Result.Contains("testObjectSerialization")), "application/json"))
+                .Returns(_jsonResponseWithOkStatus);
+            var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
+            A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
+
+            var settings = new TeamCityConnectionSettings(new Uri("https://fake"), true, "guest", string.Empty, true);
+            var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
+
+            // Act
+            var result = tcApiClient.Put("test", new BuildModel { BuildTypeId = "testObjectSerialization", FinishDate = _dateUnderTest });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.BuildTypeId.Should().Be("test");
+            result.FinishDate.Should().Be(_dateUnderTest);
+        }
     }
 }

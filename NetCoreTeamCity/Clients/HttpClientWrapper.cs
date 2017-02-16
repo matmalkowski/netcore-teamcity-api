@@ -44,6 +44,18 @@ namespace NetCoreTeamCity.Clients
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
             return _client.PostAsync(url, content);
         }
+
+        public HttpResponseMessage Put(string url, HttpContent content, string contentType = HttpContentType.Json)
+        {
+            return PutAsync(url, content, contentType).Result;
+        }
+
+        public Task<HttpResponseMessage> PutAsync(string url, HttpContent content, string contentType = HttpContentType.Json)
+        {
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
+            return _client.PutAsync(url, content);
+        }
         
         public void SetBasicAuthentication(string userName, string password)
         {
