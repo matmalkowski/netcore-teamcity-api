@@ -9,5 +9,8 @@
         public int Failed { get; set; }
         public int NewFailed { get; set; }
         public int Ignored { get; set; }
+        public string NextHref { get; set; }
+        public string PrevHref { get; set; }
+
     }
 }
