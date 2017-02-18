@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NetCoreTeamCity.Api;
+using System.Collections.Generic;
 
 namespace NetCoreTeamCity.Locators.TestOccurrences
 {
@@ -8,7 +9,7 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
 
         internal TestOccurrencesField()
         {
-            _fields = new List<string>() { "count", "href", "nextHref", "prevHref", new TestOccurrenceField().GetFieldsQueryString() };
+            _fields = new List<string>() {  };
         }
 
         public TestOccurrencesField Count()
@@ -19,22 +20,19 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
 
         public TestOccurrencesField Href()
         {
-            _fields.Add("Href");
+            _fields.Add("href");
             return this;
         }
-        public TestOccurrencesField NextHref()
+
+        public TestOccurrencesField TestOccurrence(TestOccurrenceField testOccurenceField)
         {
-            _fields.Add("nextHref");
-            return this;
-        }
-        public TestOccurrencesField PrevHref()
-        {
-            _fields.Add("PrevHref");
+            _fields.Add(testOccurenceField.GetFieldsQueryString());
             return this;
         }
 
         internal string GetFieldsQueryString()
         {
+            if(_fields.Count == 0) { Count().Href().TestOccurrence(Include.TestOccurrenceField); }
             return string.Join(",", _fields);
         }
     }

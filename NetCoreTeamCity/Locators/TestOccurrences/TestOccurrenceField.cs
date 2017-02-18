@@ -8,7 +8,12 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
 
         internal TestOccurrenceField()
         {
-            _fields = new List<string>() { "id", "name", "status", "duration", "href" };
+            _fields = new List<string>();
+        }
+        public TestOccurrenceField Default()
+        {
+            Id().Name().Status().Duration().Href();
+            return this;
         }
 
         public TestOccurrenceField Id()
@@ -76,12 +81,13 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
         }
         public TestOccurrenceField Build()
         {
-            _fields.Add("test");
+            _fields.Add("build");
             return this;
         }
 
         internal string GetFieldsQueryString()
         {
+            if(_fields.Count == 0) { Default(); }
             return $"testOccurrence({string.Join(",", _fields)})";
         }
     }
