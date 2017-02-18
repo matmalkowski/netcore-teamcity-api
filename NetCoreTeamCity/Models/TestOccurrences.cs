@@ -1,4 +1,6 @@
-﻿namespace NetCoreTeamCity.Models
+﻿using System.Collections.Generic;
+
+namespace NetCoreTeamCity.Models
 {
     public class TestOccurrences
     {
@@ -11,6 +13,7 @@
         public int Ignored { get; set; }
         public string NextHref { get; set; }
         public string PrevHref { get; set; }
+        public List<TestOccurrence> testOccurrenceItems { get; set; }
 
     }
 }
