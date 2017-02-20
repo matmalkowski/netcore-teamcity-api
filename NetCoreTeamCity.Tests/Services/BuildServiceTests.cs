@@ -21,7 +21,7 @@ namespace NetCoreTeamCity.Tests.Services
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
             A.CallTo(() => teamCityApiClient.Get<BuildModel>("builds/id:123")).Returns(new BuildModel() {Id = 123});
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var build = buildService.Get(123);
@@ -38,7 +38,7 @@ namespace NetCoreTeamCity.Tests.Services
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
             A.CallTo(() => teamCityApiClient.Get<BuildModel>("builds/id:123")).Throws(new HttpException(HttpStatusCode.NotFound));
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var build = buildService.Get(123);
@@ -55,7 +55,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() {Id = 1}, new BuildModel() {Id = 2} } });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find();
@@ -73,7 +73,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100"))
                 .Returns(new Builds { Build = new List<BuildModel> () });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find();
@@ -90,7 +90,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100&fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 }, new BuildModel() { Id = 2 } } });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find(Include.Build.StartDate());
@@ -108,7 +108,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123"))
                 .Returns(new Builds { Build = new List<BuildModel> () });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find(By.Build.Id(123));
@@ -125,7 +125,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 } } });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find(By.Build.Id(123));
@@ -143,7 +143,7 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<Builds>("builds?locator=count:100,id:123&fields=build(buildTypeId,href,id,number,state,status,webUrl,startDate)"))
                 .Returns(new Builds { Build = new List<BuildModel> { new BuildModel() { Id = 1 } } });
 
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             var builds = buildService.Find(By.Build.Id(123), Include.Build.StartDate());
@@ -158,7 +158,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            var buildService = new BuildService(teamCityApiClient);
+            var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
             buildService.Stop(123, "Test");

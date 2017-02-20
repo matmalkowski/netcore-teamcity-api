@@ -9,8 +9,9 @@ namespace NetCoreTeamCity.Services
     {
         private const string Endpoint = "builds";
 
-        public BuildService(ITeamCityApiClient apiClient) : base(apiClient)
-        {           
+        public BuildService(ITeamCityApiClient apiClient, IBuildTagsService tagsService) : base(apiClient)
+        {
+            Tags = tagsService;
         }
 
         public Build Get(long buildId)
@@ -34,5 +35,7 @@ namespace NetCoreTeamCity.Services
         {
             return CancelBuild(Endpoint, buildId, comment, reAddToTheQueue);
         }
+
+        public IBuildTagsService Tags { get; }
     }
 }
