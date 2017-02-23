@@ -5,10 +5,10 @@ namespace NetCoreTeamCity.Services
 {
     public interface IBuildTagsService
     {
-        IList<string> Get(BuildLocator locator);
-        IList<string> Replace(BuildLocator locator, string tag);
-        IList<string> Replace(BuildLocator locator, IList<string> tags);
-        IList<string> Add(BuildLocator locator, string tag);
-        IList<string> Add(BuildLocator locator, IList<string> tags);
+        IList<string> Get(long buildId);
+        IList<string> Replace(long buildId, string tag);
+        IList<string> Replace(long buildId, IList<string> tags);
+        IList<string> Add(long buildId, string tag);
+        IList<string> Add(long buildId, IList<string> tags);
     }
 }
