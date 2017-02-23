@@ -353,5 +353,38 @@ namespace NetCoreTeamCity.Tests.Services
                 .MustHaveHappened();
         }
 
+        [Test]
+        public void GetQueuedBuild_BadRequest_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<BuildModel>("buildQueue/id:123")).Throws(new HttpException(HttpStatusCode.BadRequest));
+
+            var queuedBuildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            Action action = () => queuedBuildService.Get(123);
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public void CancelRunningBuild_BadRequest_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildCancelRequest, BuildModel>("buildQueue/123", A<BuildCancelRequest>.Ignored))
+                .Throws(new HttpException(HttpStatusCode.BadRequest));
+
+            var buildService = new QueuedBuildService(teamCityApiClient);
+
+            // Act
+            Action action = () => buildService.Cancel(123, "Test");
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
     }
 }

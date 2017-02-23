@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using FakeItEasy;
 using FluentAssertions;
@@ -166,6 +167,39 @@ namespace NetCoreTeamCity.Tests.Services
             // Assert
             A.CallTo(() => teamCityApiClient.Post<BuildCancelRequest, BuildModel>("builds/123", A<BuildCancelRequest>.Ignored))
                 .MustHaveHappened();
+        }
+
+        [Test]
+        public void GetBuild_BadRequest_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<BuildModel>("builds/id:123")).Throws(new HttpException(HttpStatusCode.BadRequest));
+
+            var buildService = new BuildService(teamCityApiClient, null);
+
+            // Act
+            Action action = () => buildService.Get(123);
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public void CancelRunningBuild_BadRequest_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<BuildCancelRequest, BuildModel>("builds/123", A<BuildCancelRequest>.Ignored))
+                .Throws(new HttpException(HttpStatusCode.BadRequest));
+            var buildService = new BuildService(teamCityApiClient, null);
+
+
+            // Act
+            Action action = () => buildService.Stop(123, "Test");
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }
