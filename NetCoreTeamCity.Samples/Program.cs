@@ -25,6 +25,12 @@ namespace NetCoreTeamCity.Samples
 
             var queuedBuild = teamCity.QueuedBuilds.Run("Build_Type_Id", comment: "Test build from API");
 
+            var canceledBuild = teamCity.QueuedBuilds.Cancel(123, "this queued build was removed from the queue by API");
+
+            var stoppedBuild = teamCity.Builds.Stop(123, "this running build was stopped by API call");
+
+            var buildTags = teamCity.Builds.Tags.Get(123);
+
             Console.ReadLine();
         }
     }
