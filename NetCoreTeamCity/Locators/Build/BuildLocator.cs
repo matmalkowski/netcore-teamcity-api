@@ -123,7 +123,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator Branch(string branchName)
         {
-            _locators.Add(new ApiLocator("branch", branchName));
+            _locators.Add(new ApiLocator("branch", WebUtility.UrlEncode(branchName)));
             return this;
         }
 

@@ -8,6 +8,7 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
     [TestFixture]
     public class BranchLocatorTests
     {
+        [Test]
         public void By_Name()
         {
             // Arrange
@@ -18,6 +19,19 @@ namespace NetCoreTeamCity.Tests.Locators.Branch
 
             // Assert
             query.Should().Be("name:123");
+        }
+
+        [Test]
+        public void By_NameWithSpecialCharacter()
+        {
+            // Arrange
+            var locator = By.Branch.Name("pull/123");
+
+            // Act
+            var query = (locator as ILocator).GetLocatorQueryString();
+
+            // Assert
+            query.Should().Be("name:pull%2F123");
         }
 
         [TestCase(Flag.Any)]
