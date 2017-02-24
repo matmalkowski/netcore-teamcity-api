@@ -191,5 +191,111 @@ namespace NetCoreTeamCity.Tests.Services
             // Assert
             action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\\r\\nParameter name: tag");
         }
+
+        [Test]
+        public void Replace_BuildNotFound_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Put<Tags>("builds/123/tags/", A<Tags>.That.Matches(t => t.Tag[0].Name == "tag1")))
+                .Throws(new HttpException(HttpStatusCode.NotFound));
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            Action action = () => tagService.Replace(123, "tag1");
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public void Add_SingleTag()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<Tags>("builds/123/tags/", A<Tags>.That.Matches(t => t.Tag[0].Name == "tag1")))
+                .Returns(new Tags() { Tag = new List<Tag>() { new Tag() { Name = "tag1" } } });
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            var tags = tagService.Add(123, "tag1");
+
+            // Assert
+            tags.Should().NotBeNull();
+            tags.Count.Should().Be(1);
+            tags.FirstOrDefault().Should().Be("tag1");
+        }
+
+        [Test]
+        public void Add_MultipleTags()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<Tags>("builds/123/tags/", A<Tags>.That.Matches(t => t.Tag[0].Name == "tag1" && t.Tag[1].Name == "tag2")))
+                .Returns(new Tags() { Tag = new List<Tag>() { new Tag() { Name = "tag1" }, new Tag() { Name = "tag2" } } });
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            var tags = tagService.Add(123, new List<string>() { "tag1", "tag2" });
+
+            // Assert
+            tags.Should().NotBeNull();
+            tags.Count.Should().Be(2);
+            tags[0].Should().Be("tag1");
+            tags[1].Should().Be("tag2");
+        }
+
+        [Test]
+        public void Add_NoTags()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<Tags>("builds/123/tags/", A<Tags>.That.Matches(t => t.Tag.Count == 0)))
+                .Returns(new Tags());
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            var tags = tagService.Add(123, new List<string>());
+
+            // Assert
+            tags.Should().NotBeNull();
+            tags.Count.Should().Be(0);
+        }
+
+        [Test]
+        public void Add_NullPassedInsteadOfTagList()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            Action action = () => tagService.Add(123, (string)null);
+
+            // Assert
+            action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\\r\\nParameter name: tag");
+        }
+
+        [Test]
+        public void Add_BuildNotFound_ExceptionRethrown()
+        {
+            // Arrange
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Post<Tags>("builds/123/tags/", A<Tags>.That.Matches(t => t.Tag[0].Name == "tag1")))
+                .Throws(new HttpException(HttpStatusCode.NotFound));
+
+            var tagService = new BuildTagsService(teamCityApiClient);
+
+            // Act
+            Action action = () => tagService.Add(123, "tag1");
+
+            // Assert
+            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }
