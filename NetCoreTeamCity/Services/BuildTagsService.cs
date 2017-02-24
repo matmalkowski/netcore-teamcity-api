@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using NetCoreTeamCity.Api;
 using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Exceptions;
-using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Services
@@ -36,22 +33,46 @@ namespace NetCoreTeamCity.Services
 
         public IList<string> Replace(long buildId, string tag)
         {
-            throw new NotImplementedException();
+            if (tag == null) throw new ArgumentNullException(nameof(tag));
+
+            return Replace(buildId, new List<string>() {tag});
         }
 
         public IList<string> Replace(long buildId, IList<string> tags)
         {
-            throw new NotImplementedException();
+            if (tags == null) throw new ArgumentNullException(nameof(tags));
+
+            var toReplace = GetTagsObjectFromStringList(tags);
+            var replaced = _apiClient.Put(GetUri(buildId), toReplace);
+
+            return replaced?.Tag != null ? replaced.Tag.Select(t => t.Name).ToList() : new List<string>();
         }
 
         public IList<string> Add(long buildId, string tag)
         {
-            throw new NotImplementedException();
+            if (tag == null) throw new ArgumentNullException(nameof(tag));
+
+            return Add(buildId, new List<string>() { tag });
         }
 
         public IList<string> Add(long buildId, IList<string> tags)
         {
-            throw new NotImplementedException();
+            if (tags == null) throw new ArgumentNullException(nameof(tags));
+
+            var toAdd = GetTagsObjectFromStringList(tags);
+            var added = _apiClient.Post(GetUri(buildId), toAdd);
+
+            return added?.Tag != null ? added.Tag.Select(t => t.Name).ToList() : new List<string>();
+        }
+
+        private Tags GetTagsObjectFromStringList(IList<string> inList)
+        {
+            var tags = new Tags() { Tag = new List<Tag>() };
+            foreach (var tag in inList)
+            {
+                tags.Tag.Add(new Tag() { Name = tag });
+            }
+            return tags;
         }
 
         private string GetUri(long buildId)
