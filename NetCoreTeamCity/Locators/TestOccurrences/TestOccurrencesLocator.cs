@@ -35,19 +35,19 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
 
         public TestOccurrencesLocator Build(BuildLocator build)
         {
-            _locators.Add(new ApiLocator((build as ILocator).GetLocatorQueryString()));
+            _locators.Add(new ApiLocator("build", $"({ (build as ILocator).GetLocatorQueryString() })"));
             return this;
         }
 
         public TestOccurrencesLocator BuildType(BuildConfigurationLocator buildTypeLocator)
         {
-            _locators.Add(new ApiLocator((buildTypeLocator as ILocator).GetLocatorQueryString()));
+            _locators.Add(new ApiLocator("buildType", $"({(buildTypeLocator as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
         public TestOccurrencesLocator AffectedProject(ProjectLocator affectedProject)
         {
-            _locators.Add(new ApiLocator((affectedProject as ILocator).GetLocatorQueryString()));
+            _locators.Add(new ApiLocator("affectedProduct", $"({(affectedProject as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 

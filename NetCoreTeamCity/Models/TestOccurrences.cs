@@ -13,7 +13,7 @@ namespace NetCoreTeamCity.Models
         public int Ignored { get; set; }
         public string NextHref { get; set; }
         public string PrevHref { get; set; }
-        public List<TestOccurrence> testOccurrenceItems { get; set; }
+        public List<TestOccurrence> TestOccurrenceItems { get; set; }
 
     }
 }

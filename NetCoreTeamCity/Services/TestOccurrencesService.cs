@@ -1,4 +1,5 @@
-﻿using NetCoreTeamCity.Clients;
+﻿using NetCoreTeamCity.Api;
+using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Exceptions;
 using NetCoreTeamCity.Locators;
 using NetCoreTeamCity.Locators.Build;
@@ -33,12 +34,28 @@ namespace NetCoreTeamCity.Services
             }
         }
 
+        public IList<TestOccurrence> Find(BuildLocator locator)
+        {
+            string query = GetQuery(By.TestOccurences.Build(locator));
+
+            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
+            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
+        }
+
+        public IList<TestOccurrence> Find(TestOccurrencesLocator locator)
+        {
+            string query = GetQuery(locator);
+            
+            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
+            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
+        }
+
         public IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrenceField fields = null)
         {
-            string query = GetQuery(locator, fields);
+            string query = GetQuery(locator);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
             var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.testOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.testOccurrenceItems;
+            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
         }
 
         public IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrencesField fields = null)
@@ -46,10 +63,10 @@ namespace NetCoreTeamCity.Services
             string query = GetQuery(locator);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
             var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.testOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.testOccurrenceItems;
+            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
         }
 
-        private string GetQuery(ILocator locator, TestOccurrenceField fields = null)
+        private string GetQuery(ILocator locator)
         {
             var query = $"?locator=";
             if (locator != null) query += $"{locator.GetLocatorQueryString()}";
