@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace NetCoreTeamCity.Locators.Branch
 {
@@ -14,7 +15,7 @@ namespace NetCoreTeamCity.Locators.Branch
 
         public BranchLocator Name(string name)
         {
-            _locators.Add(new ApiLocator("name", name));
+            _locators.Add(new ApiLocator("name", WebUtility.UrlEncode(name)));
             return this;
         }
 

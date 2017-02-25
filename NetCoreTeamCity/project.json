@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-beta-*",
+  "version": "0.1.1-beta-*",
   "packOptions": {
     "licenseUrl": "https://github.com/monkey3310/netcore-teamcity-api/blob/master/LICENSE",
     "projectUrl": "https://github.com/monkey3310/netcore-teamcity-api/"

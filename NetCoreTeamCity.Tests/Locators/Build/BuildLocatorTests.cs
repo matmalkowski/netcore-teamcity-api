@@ -289,6 +289,19 @@ namespace NetCoreTeamCity.Tests.Locators.Build
         }
 
         [Test]
+        public void By_BranchWithSpecialChar()
+        {
+            // Arrange
+            var locator = By.Build.Branch("customName/123");
+
+            // Act
+            var query = (locator as ILocator).GetLocatorQueryString();
+
+            // Assert
+            query.Should().Be("branch:customName%2F123");
+        }
+
+        [Test]
         public void By_BranchLocator()
         {
             // Arrange
