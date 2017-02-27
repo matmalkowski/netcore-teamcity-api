@@ -94,7 +94,7 @@ namespace NetCoreTeamCity.Tests.Services
             var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
-            var builds = buildService.Find(Include.Build.StartDate());
+            var builds = buildService.Find(Include.Build.Default().StartDate());
 
             // Assert
             builds.Count.Should().Be(2);
@@ -147,7 +147,7 @@ namespace NetCoreTeamCity.Tests.Services
             var buildService = new BuildService(teamCityApiClient, null);
 
             // Act
-            var builds = buildService.Find(By.Build.Id(123), Include.Build.StartDate());
+            var builds = buildService.Find(By.Build.Id(123), Include.Build.Default().StartDate());
 
             // Assert
             builds.Count.Should().Be(1);
