@@ -10,6 +10,7 @@ namespace NetCoreTeamCity.Clients
 {
     internal class TeamCityApiClient : ITeamCityApiClient
     {
+        private const string AcceptPlainText = "text/plain";
         private readonly ITeamCityConnectionSettings _teamCityConnectionSettings;
         private readonly IHttpClientWrapperFactory _httpClientWrapperFactory;
 
@@ -23,7 +24,7 @@ namespace NetCoreTeamCity.Clients
         {
             using (var client = GetHttpClient())
             {
-                var response = client.Get(GetRequestUri(url), RequestContentType);
+                var response = client.Get(GetRequestUri(url), RequestContentType(typeof(T)));
                 if (!response.IsSuccessStatusCode)
                 {
                     ThrowHttpException(response, GetRequestUri(url));
@@ -31,8 +32,9 @@ namespace NetCoreTeamCity.Clients
 
                 if (_teamCityConnectionSettings.FavorJsonOverXml)
                 {
-                    var jsonStringConent = response.Content.ReadAsStringAsync().Result;
-                    return JsonConvert.DeserializeObject<T>(jsonStringConent, new TeamCityDateTimeConventer());
+                    var jsonStringContent = response.Content.ReadAsStringAsync().Result;
+                    if (typeof(T) == typeof(string)) return (T)Convert.ChangeType(jsonStringContent, typeof(T));
+                    return JsonConvert.DeserializeObject<T>(jsonStringContent, new TeamCityDateTimeConventer());
                 }
                 else
                 {
@@ -82,7 +84,7 @@ namespace NetCoreTeamCity.Clients
             {
                 throw new NotImplementedException();
             }
-            var response = httpClientMethod.Invoke(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType), RequestContentType);
+            var response = httpClientMethod.Invoke(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType(typeof(T1))), RequestContentType(typeof(T2)));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -92,6 +94,7 @@ namespace NetCoreTeamCity.Clients
             if (_teamCityConnectionSettings.FavorJsonOverXml)
             {
                 var jsonStringContent = response.Content.ReadAsStringAsync().Result;
+                if (typeof(T2) == typeof(string)) return (T2)Convert.ChangeType(jsonStringContent, typeof(T2));
                 return JsonConvert.DeserializeObject<T2>(jsonStringContent, new TeamCityDateTimeConventer());
             }
             else
@@ -100,7 +103,11 @@ namespace NetCoreTeamCity.Clients
             }
         }
 
-        private string RequestContentType => _teamCityConnectionSettings.FavorJsonOverXml ? HttpContentType.Json : HttpContentType.Xml;
+        private string RequestContentType(Type type)
+        {
+            if (type == typeof(string)) return AcceptPlainText;
+            return _teamCityConnectionSettings.FavorJsonOverXml? HttpContentType.Json: HttpContentType.Xml;
+        } 
 
         private string GetRequestUri(string url)
         {

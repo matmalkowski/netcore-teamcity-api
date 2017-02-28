@@ -7,10 +7,12 @@ namespace NetCoreTeamCity.Services
 {
     internal class BuildService : BaseBuildService, IBuildService
     {
+        private readonly IBuildPinningService _buildPinningService;
         private const string Endpoint = "builds";
 
-        public BuildService(ITeamCityApiClient apiClient, IBuildTagsService tagsService) : base(apiClient)
+        public BuildService(ITeamCityApiClient apiClient, IBuildTagsService tagsService, IBuildPinningService buildPinningService) : base(apiClient)
         {
+            _buildPinningService = buildPinningService;
             Tags = tagsService;
         }
 
@@ -37,5 +39,20 @@ namespace NetCoreTeamCity.Services
         }
 
         public IBuildTagsService Tags { get; }
+
+        public void Pin(long buildId, string comment = null)
+        {
+            _buildPinningService.Pin(buildId);
+        }
+
+        public void UnPin(long buildId, string comment = null)
+        {
+            _buildPinningService.UnPin(buildId);
+        }
+
+        public bool IsPinned(long buildId)
+        {
+            return _buildPinningService.IsPinned(buildId);
+        }
     }
 }
