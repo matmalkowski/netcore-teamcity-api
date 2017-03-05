@@ -58,7 +58,7 @@ namespace NetCoreTeamCity.Tests.Services
             var testOccurenceService = new TestOccurrencesService(teamCityApiClient);
 
             // Act
-            var testOccList = testOccurenceService.Find(By.Build.Id(123456));
+            var testOccList = testOccurenceService.Find(By.Build.Id(123456), count:0);
 
             // Assert
             testOccList.Should().NotBeNull();
