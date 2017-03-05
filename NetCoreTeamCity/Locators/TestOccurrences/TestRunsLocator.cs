@@ -81,24 +81,6 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
             return this;
         }
 
-        public TestRunsLocator Start(int start)
-        {
-            _locators.Add(new ApiLocator("start", start.ToString()));
-            return this;
-        }
-
-        public TestRunsLocator Count(int count)
-        {
-            _locators.Add(new ApiLocator("count", count.ToString()));
-            return this;
-        }
-
-        public TestRunsLocator LookupLimit(int lookupLimit)
-        {
-            _locators.Add(new ApiLocator("lookupLimit", lookupLimit.ToString()));
-            return this;
-        }
-
         string ILocator.GetLocatorQueryString()
         {
             return string.Join(",", _locators.Select(l => l.Value));
