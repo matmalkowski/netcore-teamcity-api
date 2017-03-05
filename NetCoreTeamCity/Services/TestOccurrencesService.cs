@@ -11,7 +11,7 @@ using System.Net;
 
 namespace NetCoreTeamCity.Services
 {
-    internal class TestOccurrencesService
+    internal class TestOccurrencesService : ITestOccurencesService
     {
         private readonly ITeamCityApiClient ApiClient;
         private string endpoint = "testOccurrences";
@@ -34,33 +34,28 @@ namespace NetCoreTeamCity.Services
             }
         }
 
-        public IList<TestOccurrence> Find(BuildLocator locator)
+        public IList<TestOccurrence> Find(BuildLocator locator, TestOccurrenceField fields = null, int count = 100, int start = 0, int lookuplimit = 0)
         {
-            string query = GetQuery(By.TestOccurences.Build(locator));
-
-            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
-        }
-
-        public IList<TestOccurrence> Find(TestOccurrencesLocator locator)
-        {
-            string query = GetQuery(locator);
-            
-            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
-        }
-
-        public IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrenceField fields = null)
-        {
-            string query = GetQuery(locator);
+            string query = GetQuery(By.TestOccurences.Build(locator), count, start, lookuplimit);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
             var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
             return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
         }
 
-        private string GetQuery(ILocator locator)
+        public IList<TestOccurrence> Find(TestRunsLocator locator, TestOccurrenceField fields = null, int count = 100, int start = 0, int lookuplimit = 0)
+        {
+            string query = GetQuery(locator, count, start, lookuplimit);
+            if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
+            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
+            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
+        }
+
+        private string GetQuery(ILocator locator, int count, int start, int lookuplimit)
         {
             var query = $"?locator=";
+            if (count > 0) { query += $"count:{count},"; }
+            if (start > 0) { query += $"start:{start},"; }
+            if (lookuplimit > 0) { query += $"lookuplimit:{lookuplimit},"; }
             if (locator != null) query += $"{locator.GetLocatorQueryString()}";
             return query;
         }

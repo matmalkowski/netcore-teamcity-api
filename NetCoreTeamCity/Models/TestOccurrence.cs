@@ -7,7 +7,7 @@ namespace NetCoreTeamCity.Models
         public string Id { get; set; }
         public string Href { get; set; }
         public string Name { get; set; }
-        public TestOccurrenceStatus Status { get; set; }
+        public TestRunStatus Status { get; set; }
         public bool? Ignored { get; set; }
         public int? Duration { get; set; }
         public int? RunOrder { get; set; }
@@ -18,11 +18,10 @@ namespace NetCoreTeamCity.Models
         public Build Build { get; set; }
     }
 
-    public enum TestOccurrenceStatus
+    public enum TestRunStatus
     {
         SUCCESS,
         FAILURE,
         UNKNOWN
-
     }
 }

@@ -2,110 +2,102 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using NetCoreTeamCity.Helpers;
-using NetCoreTeamCity.Locators.Branch;
 using NetCoreTeamCity.Locators.BuildConfiguration;
-using NetCoreTeamCity.Locators.User;
-using NetCoreTeamCity.Models;
 using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Locators.Project;
 
 namespace NetCoreTeamCity.Locators.TestOccurrences
 {
-    public class TestOccurrencesLocator : ILocator
+    public class TestRunsLocator : ILocator
     {
         private readonly List<ApiLocator> _locators;
 
-        internal TestOccurrencesLocator()
+        internal TestRunsLocator()
         {
             _locators = new List<ApiLocator>();
         }
 
-        public TestOccurrencesLocator Id(long buildId)
+        public TestRunsLocator Id(long buildId)
         {
             _locators.Add(new ApiLocator("id", buildId.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator Test(string testName)
+        public TestRunsLocator Test(string testName)
         {
             _locators.Add(new ApiLocator("test", testName));
             return this;
         }
 
-        public TestOccurrencesLocator Build(BuildLocator build)
+        public TestRunsLocator Build(BuildLocator build)
         {
             _locators.Add(new ApiLocator("build", $"({ (build as ILocator).GetLocatorQueryString() })"));
             return this;
         }
 
-        public TestOccurrencesLocator BuildType(BuildConfigurationLocator buildTypeLocator)
+        public TestRunsLocator BuildType(BuildConfigurationLocator buildTypeLocator)
         {
             _locators.Add(new ApiLocator("buildType", $"({(buildTypeLocator as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
-        public TestOccurrencesLocator AffectedProject(ProjectLocator affectedProject)
+        public TestRunsLocator AffectedProject(ProjectLocator affectedProject)
         {
             _locators.Add(new ApiLocator("affectedProduct", $"({(affectedProject as ILocator).GetLocatorQueryString()})"));
             return this;
         }
 
-        public TestOccurrencesLocator CurrentlyFailing(bool currentlyFailing)
+        public TestRunsLocator CurrentlyFailing(bool currentlyFailing)
         {
             _locators.Add(new ApiLocator("currentlyFailing", currentlyFailing.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator Branch(string branchName)
+        public TestRunsLocator Branch(string branchName)
         {
             _locators.Add(new ApiLocator("branch", branchName));
             return this;
         }
 
-        public TestOccurrencesLocator Ignored(bool ignored)
+        public TestRunsLocator Ignored(bool ignored)
         {
             _locators.Add(new ApiLocator("ignored", ignored.ToString()));
             return this;
         }
-        public TestOccurrencesLocator Muted(bool muted)
+        public TestRunsLocator Muted(bool muted)
         {
             _locators.Add(new ApiLocator("muted", muted.ToString()));
             return this;
         }
-        public TestOccurrencesLocator CurrentlyMuted(bool currentlyMuted)
+        public TestRunsLocator CurrentlyMuted(bool currentlyMuted)
         {
             _locators.Add(new ApiLocator("currentlyMuted", currentlyMuted.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator CurrentlyInvestigated(bool currentlyInvestigated)
+        public TestRunsLocator CurrentlyInvestigated(bool currentlyInvestigated)
         {
             _locators.Add(new ApiLocator("currentlyInvestigated", currentlyInvestigated.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator Start(int start)
+        public TestRunsLocator Start(int start)
         {
             _locators.Add(new ApiLocator("start", start.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator Count(int count)
+        public TestRunsLocator Count(int count)
         {
             _locators.Add(new ApiLocator("count", count.ToString()));
             return this;
         }
 
-        public TestOccurrencesLocator LookupLimit(int lookupLimit)
+        public TestRunsLocator LookupLimit(int lookupLimit)
         {
             _locators.Add(new ApiLocator("lookupLimit", lookupLimit.ToString()));
             return this;
         }
-
-
-
-
 
         string ILocator.GetLocatorQueryString()
         {

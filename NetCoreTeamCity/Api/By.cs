@@ -14,6 +14,6 @@ namespace NetCoreTeamCity.Api
         public static BranchLocator Branch => new BranchLocator();
         public static UserLocator User => new UserLocator();
         public static ProjectLocator Project => new ProjectLocator();
-        public static TestOccurrencesLocator TestOccurences => new TestOccurrencesLocator();
+        public static TestRunsLocator TestOccurences => new TestRunsLocator();
     }
 }
