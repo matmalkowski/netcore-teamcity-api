@@ -58,14 +58,6 @@ namespace NetCoreTeamCity.Services
             return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
         }
 
-        public IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrencesField fields = null)
-        {
-            string query = GetQuery(locator);
-            if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
-            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
-        }
-
         private string GetQuery(ILocator locator)
         {
             var query = $"?locator=";

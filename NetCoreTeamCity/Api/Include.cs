@@ -7,6 +7,5 @@ namespace NetCoreTeamCity.Api
     {
         public static BuildField Build => new BuildField();
         public static TestOccurrenceField TestOccurrenceField => new TestOccurrenceField();
-        public static TestOccurrencesField TestOccurrencesField => new TestOccurrencesField();
     }
 }

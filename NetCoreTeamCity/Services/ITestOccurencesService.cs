@@ -8,7 +8,5 @@ namespace NetCoreTeamCity.Services
     {
         TestOccurrence Get(string testOccurenceId);
         IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrenceField fields = null);
-        IList<TestOccurrence> Find(TestOccurrencesLocator locator, TestOccurrencesField tosfields = null);
-
     }
 }
