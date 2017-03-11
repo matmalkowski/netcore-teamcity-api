@@ -45,10 +45,10 @@ namespace NetCoreTeamCity.Tests.Services
         public void Find_ByBuildId_NoField()
         {
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<TestOccurrences>($"{endpoint}?locator=build:(id:123456)"))
-                .Returns(new TestOccurrences
+            A.CallTo(() => teamCityApiClient.Get<TestRunsModel>($"{endpoint}?locator=build:(id:123456)"))
+                .Returns(new TestRunsModel
                 {
-                    TestOccurrenceItems = new List<TestOccurrence>
+                    TestOccurrences = new List<TestOccurrence>
                     {
                         new TestOccurrence {Id="id:123,build:(id:123456)" },
                         new TestOccurrence {Id="id:124,build:(id:123456)" }
