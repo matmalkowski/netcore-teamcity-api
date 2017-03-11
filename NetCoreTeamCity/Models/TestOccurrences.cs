@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NetCoreTeamCity.Models
+﻿namespace NetCoreTeamCity.Models
 {
     public class TestOccurrences
     {
@@ -11,9 +9,5 @@ namespace NetCoreTeamCity.Models
         public int Failed { get; set; }
         public int NewFailed { get; set; }
         public int Ignored { get; set; }
-        public string NextHref { get; set; }
-        public string PrevHref { get; set; }
-        public List<TestOccurrence> TestOccurrenceItems { get; set; }
-
     }
 }
