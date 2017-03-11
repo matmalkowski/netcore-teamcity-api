@@ -38,16 +38,16 @@ namespace NetCoreTeamCity.Services
         {
             string query = GetQuery(By.TestOccurences.Build(locator), count, start, lookuplimit);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
-            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
+            var response = ApiClient.Get<TestRunsModel>($"{endpoint}{query}");
+            return response.TestOccurrences == null ? new List<TestOccurrence>() : response.TestOccurrences;
         }
 
         public IList<TestOccurrence> Find(TestOccurrenceLocator locator, TestOccurrenceField fields = null, int count = 100, int start = 0, int lookuplimit = 0)
         {
             string query = GetQuery(locator, count, start, lookuplimit);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";
-            var testOccurreces = ApiClient.Get<TestOccurrences>($"{endpoint}{query}");
-            return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
+            var response = ApiClient.Get<TestRunsModel>($"{endpoint}{query}");
+            return response.TestOccurrences == null ? new List<TestOccurrence>() : response.TestOccurrences;
         }
 
         private string GetQuery(ILocator locator, int count, int start, int lookuplimit)
