@@ -42,7 +42,7 @@ namespace NetCoreTeamCity.Services
             return testOccurreces.TestOccurrenceItems == null ? new List<TestOccurrence>() : testOccurreces.TestOccurrenceItems;
         }
 
-        public IList<TestOccurrence> Find(TestRunsLocator locator, TestOccurrenceField fields = null, int count = 100, int start = 0, int lookuplimit = 0)
+        public IList<TestOccurrence> Find(TestOccurrenceLocator locator, TestOccurrenceField fields = null, int count = 100, int start = 0, int lookuplimit = 0)
         {
             string query = GetQuery(locator, count, start, lookuplimit);
             if (fields != null) query += $"&fields={fields.GetFieldsQueryString()}";

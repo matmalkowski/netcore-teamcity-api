@@ -12,7 +12,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         public void Include_TestOccurrenceFieldDefault()
         {
             // Arrange
-            var fields = Include.TestOccurrenceField;
+            var fields = Include.TestRun;
             // Act
             var query = fields.GetFieldsQueryString();
             // Assert
@@ -21,7 +21,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Test()
         {
-            var fields = Include.TestOccurrenceField.Test();
+            var fields = Include.TestRun.Test();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(test)");
@@ -29,7 +29,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Build()
         {
-            var fields = Include.TestOccurrenceField.Build();
+            var fields = Include.TestRun.Build();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(build)");
@@ -37,7 +37,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_CurrentlyInvestigated()
         {
-            var fields = Include.TestOccurrenceField.CurrentlyInvestigated();
+            var fields = Include.TestRun.CurrentlyInvestigated();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(currentlyInvestigated)");
@@ -45,7 +45,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_CurrentlyMuted()
         {
-            var fields = Include.TestOccurrenceField.CurrentlyMuted();
+            var fields = Include.TestRun.CurrentlyMuted();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(currentlyMuted)");
@@ -53,7 +53,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Details()
         {
-            var fields = Include.TestOccurrenceField.Details();
+            var fields = Include.TestRun.Details();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(details)");
@@ -61,7 +61,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Duration()
         {
-            var fields = Include.TestOccurrenceField.Duration();
+            var fields = Include.TestRun.Duration();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(duration)");
@@ -69,7 +69,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Href()
         {
-            var fields = Include.TestOccurrenceField.Href();
+            var fields = Include.TestRun.Href();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(href)");
@@ -77,7 +77,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Id()
         {
-            var fields = Include.TestOccurrenceField.Id();
+            var fields = Include.TestRun.Id();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(id)");
@@ -85,7 +85,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Ignored()
         {
-            var fields = Include.TestOccurrenceField.Ignored();
+            var fields = Include.TestRun.Ignored();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(ignored)");
@@ -93,7 +93,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Muted()
         {
-            var fields = Include.TestOccurrenceField.Muted();
+            var fields = Include.TestRun.Muted();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(muted)");
@@ -101,7 +101,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Name()
         {
-            var fields = Include.TestOccurrenceField.Name();
+            var fields = Include.TestRun.Name();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(name)");
@@ -109,7 +109,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_RunOrder()
         {
-            var fields = Include.TestOccurrenceField.RunOrder();
+            var fields = Include.TestRun.RunOrder();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(runOrder)");
@@ -117,7 +117,7 @@ namespace NetCoreTeamCity.Tests.Locators.TestOccurrences
         [Test]
         public void Include_Status()
         {
-            var fields = Include.TestOccurrenceField.Status();
+            var fields = Include.TestRun.Status();
             var query = fields.GetFieldsQueryString();
 
             query.Should().Be("testOccurrence(status)");
