@@ -69,6 +69,40 @@ namespace NetCoreTeamCity.Clients
             }
         }
 
+        public void Delete(string url)
+        {
+            using (var client = GetHttpClient())
+            {
+                client.Delete(GetRequestUri(url), null);
+            }
+        }
+
+        public void Delete<T>(string url, T obj)
+        {
+            using (var client = GetHttpClient())
+            {
+                string content;
+                if (_teamCityConnectionSettings.FavorJsonOverXml)
+                {
+                    content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                        DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
+                    });
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+
+                var response = client.Delete(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType(typeof(T))), RequestContentType(typeof(T)));
+                if (!response.IsSuccessStatusCode)
+                {
+                    ThrowHttpException(response, GetRequestUri(url));
+                }
+            }
+        }
+
         private T2 MakeTwoWayRequest<T1, T2>(string url, T1 obj, Func<string, HttpContent, string, HttpResponseMessage> httpClientMethod)
         {
             string content;

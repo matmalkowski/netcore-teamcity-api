@@ -223,5 +223,46 @@ namespace NetCoreTeamCity.Tests.Clients
             result.BuildTypeId.Should().Be("test");
             result.FinishDate.Should().Be(_dateUnderTest);
         }
+
+        [Test]
+        public void DeleteCall_NothingPassed_CallMade()
+        {
+            // Arrange
+            var httpClient = A.Fake<IHttpClientWrapper>();
+               
+            var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
+            A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
+
+            var settings = new TeamCityConnectionSettings(new Uri("https://fake"), true, "guest", string.Empty, true);
+            var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
+
+            // Act
+            tcApiClient.Delete("test");
+
+            // Assert
+            A.CallTo(() => httpClient.Delete("https://fake/guestAuth/app/rest/test", null, "application/json")).MustHaveHappened();
+        }
+
+        [Test]
+        public void DeleteCall_SerializedObjectPassedInCall_DeserializedObjectReturned()
+        {
+            // Arrange
+            var httpClient = A.Fake<IHttpClientWrapper>();
+            var httpClientFactory = A.Fake<IHttpClientWrapperFactory>();
+            A.CallTo(() => httpClientFactory.Create()).Returns(httpClient);
+
+            var settings = new TeamCityConnectionSettings(new Uri("https://fake"), true, "guest", string.Empty, true);
+            var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
+
+            // Act
+            tcApiClient.Delete("test", new BuildModel { BuildTypeId = "testObjectSerialization", FinishDate = _dateUnderTest });
+
+            // Assert
+            A.CallTo(() => httpClient.Delete("https://fake/guestAuth/app/rest/test",
+                    A<StringContent>.That.Matches(c => c.ReadAsStringAsync().Result.Contains("testObjectSerialization")),
+                    "application/json"))
+                .MustHaveHappened();
+
+        }
     }
 }
