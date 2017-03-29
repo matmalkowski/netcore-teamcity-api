@@ -69,30 +69,25 @@ namespace NetCoreTeamCity.Clients
             }
         }
 
-        public void Delete(string url)
-        {
-            using (var client = GetHttpClient())
-            {
-                client.Delete(GetRequestUri(url), null);
-            }
-        }
-
         public void Delete<T>(string url, T obj)
         {
             using (var client = GetHttpClient())
             {
-                string content;
-                if (_teamCityConnectionSettings.FavorJsonOverXml)
+                string content = string.Empty;
+                if (obj != null)
                 {
-                    content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+                    if (_teamCityConnectionSettings.FavorJsonOverXml)
                     {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                        DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
-                    });
-                }
-                else
-                {
-                    throw new NotImplementedException();
+                        content = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+                        {
+                            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                            DateFormatString = TeamCityDateTimeFormat.DateTimeFormat
+                        });
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
                 }
 
                 var response = client.Delete(GetRequestUri(url), new StringContent(content, Encoding.UTF8, RequestContentType(typeof(T))), RequestContentType(typeof(T)));

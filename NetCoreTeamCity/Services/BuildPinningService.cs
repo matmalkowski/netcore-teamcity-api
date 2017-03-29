@@ -1,5 +1,4 @@
-﻿using System;
-using NetCoreTeamCity.Clients;
+﻿using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Exceptions;
 
 namespace NetCoreTeamCity.Services
@@ -15,12 +14,12 @@ namespace NetCoreTeamCity.Services
 
         public void Pin(long buildId, string comment = null)
         {
-            throw new NotImplementedException();
+            _apiClient.Put(GetUri(buildId), comment);
         }
 
         public void UnPin(long buildId, string comment = null)
         {
-            throw new NotImplementedException();
+            _apiClient.Delete(GetUri(buildId), comment);
         }
 
         public bool IsPinned(long buildId)

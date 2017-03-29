@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using Castle.Core.Internal;
 using NUnit.Framework;
 using NetCoreTeamCity.Clients;
 using FakeItEasy;
@@ -237,10 +238,10 @@ namespace NetCoreTeamCity.Tests.Clients
             var tcApiClient = new TeamCityApiClient(settings, httpClientFactory);
 
             // Act
-            tcApiClient.Delete("test");
+            tcApiClient.Delete<string>("test", null);
 
             // Assert
-            A.CallTo(() => httpClient.Delete("https://fake/guestAuth/app/rest/test", null, "application/json")).MustHaveHappened();
+            A.CallTo(() => httpClient.Delete("https://fake/guestAuth/app/rest/test", A<StringContent>.That.Matches(c => c.ReadAsStringAsync().Result.IsNullOrEmpty()), "text/plain")).MustHaveHappened();
         }
 
         [Test]
