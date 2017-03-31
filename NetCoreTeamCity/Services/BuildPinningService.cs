@@ -27,7 +27,7 @@ namespace NetCoreTeamCity.Services
             var result = _apiClient.Get<string>(GetUri(buildId));
             bool isPinned;
             if (bool.TryParse(result, out isPinned)) return isPinned;
-            throw new UnexpectedApiResponseException($"TeamCity API response was \"{0}\", exptected it to be \"true\"/\"false\"");
+            throw new UnexpectedApiResponseException($"TeamCity API response was \"{result}\", exptected it to be \"true\"/\"false\"");
         }
 
         private string GetUri(long buildId)

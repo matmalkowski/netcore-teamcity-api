@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
 using NetCoreTeamCity.Clients;
@@ -107,6 +104,56 @@ namespace NetCoreTeamCity.Tests.Services
 
             // Assert
             action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public void IsPinnedCalled_BuildPinned_TrueReturned()
+        {
+            // Arrange
+            var teamCityClientMock = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityClientMock.Get<string>("builds/123/pin/"))
+                .Returns("true");
+
+            var pinningService = new BuildPinningService(teamCityClientMock);
+
+            // Act
+            var isPinned = pinningService.IsPinned(123);
+            // Assert
+            isPinned.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsPinnedCalled_BuildNotPinned_FalseReturned()
+        {
+            // Arrange
+            var teamCityClientMock = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityClientMock.Get<string>("builds/123/pin/"))
+                .Returns("false");
+
+            var pinningService = new BuildPinningService(teamCityClientMock);
+
+            // Act
+            var isPinned = pinningService.IsPinned(123);
+            // Assert
+            isPinned.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsPinnedCalled_TeamCityReturnsUnexpectedResult_ExceptionThrown()
+        {
+            // Arrange
+            var teamCityClientMock = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityClientMock.Get<string>("builds/123/pin/"))
+                .Returns("someUnexptectedString");
+
+            var pinningService = new BuildPinningService(teamCityClientMock);
+
+            // Act
+            Action action = () => pinningService.IsPinned(123);
+            
+            // Assert
+            action.ShouldThrow<UnexpectedApiResponseException>()
+                .Which.Message.Should().Contain("TeamCity API response was \"someUnexptectedString\", exptected it to be \"true\"/\"false\"");
         }
     }
 }
