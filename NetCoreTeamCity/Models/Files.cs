@@ -2,8 +2,8 @@
 
 namespace NetCoreTeamCity.Models
 {
-    public class LastChanges
+    internal class Files
     {
-        public IList<Change> Change { get; set; }
+        public List<File> File { get; set; }
     }
 }

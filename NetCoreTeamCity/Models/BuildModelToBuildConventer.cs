@@ -1,4 +1,6 @@
-﻿namespace NetCoreTeamCity.Models
+﻿using System.Linq;
+
+namespace NetCoreTeamCity.Models
 {
     internal static class BuildModelToBuildConventer
     {
@@ -28,7 +30,9 @@
             };
 
             if (model.LastChanges?.Change != null)
-                build.LastChanges = model.LastChanges.Change;
+            {
+                build.LastChanges = model.LastChanges.Change.Select(c => c.Convert()).ToList();
+            }
 
             if (model.Revisions?.Revision != null)
                 build.Revisions = model.Revisions.Revision;

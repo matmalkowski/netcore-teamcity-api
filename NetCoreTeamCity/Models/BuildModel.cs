@@ -25,7 +25,7 @@ namespace NetCoreTeamCity.Models
         public DateTime? QueuedDate { get; set; }
         public BuildConfiguration BuildType { get; set; }
         public Triggered Triggered { get; set; }
-        public LastChanges LastChanges { get; set; }
+        public Changes LastChanges { get; set; }
         public Revisions Revisions { get; set; }
         public Agent Agent { get; set; }
         public Properties Properties { get; set; }

@@ -63,7 +63,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildRunOptions OnSpecificChange(int changeId)
         {
-            _model.LastChanges = new LastChanges() {Change = new List<Change> {new Change {Id = changeId}}};
+            _model.LastChanges = new Changes() {Change = new List<ChangeModel> {new ChangeModel() {Id = changeId}}};
             return this;
         }
 
