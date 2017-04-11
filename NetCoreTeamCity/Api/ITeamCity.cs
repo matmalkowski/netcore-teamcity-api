@@ -6,5 +6,6 @@ namespace NetCoreTeamCity.Api
     {
         IBuildService Builds { get; }
         IQueuedBuildService QueuedBuilds { get; }
+        IChangeService Changes { get; }
     }
 }
