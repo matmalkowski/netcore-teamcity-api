@@ -15,6 +15,11 @@ namespace NetCoreTeamCity.Tests.Services
     public class TestOccurencesServiceTests
     {
         private readonly string endpoint = "testOccurrences";
+        private readonly List<TestOccurrence> defaultReturn = new List<TestOccurrence>
+        {
+            new TestOccurrence {Id="id:123,build:(id:123456)", Name="Test1", Status=TestRunStatus.SUCCESS, Duration=100 , Href="Test1Herf"},
+            new TestOccurrence {Id="id:124,build:(id:123456)", Name="Test2", Status=TestRunStatus.FAILURE, Duration=12 , Href="Test2Herf" }
+        };
         [Test]
         public void Get_SingleTestOccurrence()
         {
@@ -48,17 +53,13 @@ namespace NetCoreTeamCity.Tests.Services
             A.CallTo(() => teamCityApiClient.Get<TestRunsModel>($"{endpoint}?locator=build:(id:123456)"))
                 .Returns(new TestRunsModel
                 {
-                    TestOccurrences = new List<TestOccurrence>
-                    {
-                        new TestOccurrence {Id="id:123,build:(id:123456)" },
-                        new TestOccurrence {Id="id:124,build:(id:123456)" }
-                    }
+                    TestOccurrences = defaultReturn
                 });
 
             var testOccurenceService = new TestOccurrencesService(teamCityApiClient);
 
             // Act
-            var testOccList = testOccurenceService.Find(By.Build.Id(123456), count:0);
+            var testOccList = testOccurenceService.Find(By.Build.Id(123456), count: 0);
 
             // Assert
             testOccList.Should().NotBeNull();
@@ -66,6 +67,68 @@ namespace NetCoreTeamCity.Tests.Services
             testOccList[0].Id.Should().Be("id:123,build:(id:123456)");
             testOccList[1].Id.Should().Be("id:124,build:(id:123456)");
         }
-       
+        [Test]
+        public void Find_ByBuildId_NotFound()
+        {
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<TestRunsModel>($"{endpoint}?locator=build:(id:123456)"))
+                .Returns(new TestRunsModel
+                {
+                    TestOccurrences = defaultReturn
+                });
+
+            var testOccurenceService = new TestOccurrencesService(teamCityApiClient);
+
+            // Act
+            var testOccList = testOccurenceService.Find(By.Build.Id(123457), count: 0);
+
+            // Assert
+            testOccList.Should().NotBeNull();
+            testOccList.Count.Should().Be(0);
+        }
+        [Test]
+        public void Find_ByBuildId_FieldSpecific()
+        {
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<TestRunsModel>($"{endpoint}?locator=count:100,build:(id:123456)&fields=testOccurrence(id,name,status,duration,href)"))
+                .Returns(new TestRunsModel
+                {
+                    TestOccurrences = defaultReturn
+                });
+
+            var testOccurenceService = new TestOccurrencesService(teamCityApiClient);
+
+            // Act
+            var testOccList = testOccurenceService.Find(By.Build.Id(123456), Include.TestRun.Id().Name().Status().Duration().Href());
+
+            // Assert
+            testOccList.Should().NotBeNull();
+            testOccList.Count.Should().Be(2);
+            testOccList[0].ShouldBeEquivalentTo(defaultReturn[0]);
+            testOccList[1].ShouldBeEquivalentTo(defaultReturn[1]);
+        }
+        [Test]
+        public void Find_ByBuildId_StatusFilter_FieldSpecific()
+        {
+            var teamCityApiClient = A.Fake<ITeamCityApiClient>();
+            A.CallTo(() => teamCityApiClient.Get<TestRunsModel>($"{endpoint}?locator=count:100,build:(id:123456),status:FAILURE&fields=testOccurrence(id,name,status,duration,href)"))
+                .Returns(new TestRunsModel //"                              ?locator=count:100,build:(id:123456),status:FAILURE&fields=testOccurrence(id,name,status,duration,href)"
+                {
+                    TestOccurrences = defaultReturn.Where(to => to.Status.Equals(TestRunStatus.FAILURE)).ToList()
+                });
+
+            var testOccurenceService = new TestOccurrencesService(teamCityApiClient);
+
+            // Act
+            var testOccList = testOccurenceService.Find(By.TestOccurences.Build(
+                By.Build.Id(123456)).Status(TestRunStatus.FAILURE),
+                Include.TestRun.Id().Name().Status().Duration().Href()
+            );
+
+            // Assert
+            testOccList.Should().NotBeNull();
+            testOccList.Count.Should().Be(1);
+            testOccList[0].ShouldBeEquivalentTo(defaultReturn[1]);
+        }
     }
 }

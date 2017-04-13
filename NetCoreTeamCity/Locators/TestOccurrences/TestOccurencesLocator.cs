@@ -5,6 +5,7 @@ using System.Net;
 using NetCoreTeamCity.Locators.BuildConfiguration;
 using NetCoreTeamCity.Locators.Build;
 using NetCoreTeamCity.Locators.Project;
+using NetCoreTeamCity.Models;
 
 namespace NetCoreTeamCity.Locators.TestOccurrences
 {
@@ -78,6 +79,11 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
         public TestOccurrenceLocator CurrentlyInvestigated(bool currentlyInvestigated)
         {
             _locators.Add(new ApiLocator("currentlyInvestigated", currentlyInvestigated.ToString()));
+            return this;
+        }
+        public TestOccurrenceLocator Status(TestRunStatus status)
+        {
+            _locators.Add(new ApiLocator("status", status.ToString()));
             return this;
         }
 
