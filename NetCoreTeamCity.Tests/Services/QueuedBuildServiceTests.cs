@@ -94,7 +94,7 @@ namespace NetCoreTeamCity.Tests.Services
             var queuedBuildService = new QueuedBuildService(teamCityApiClient);
 
             // Act
-            var builds = queuedBuildService.Find(Include.Build.StartDate());
+            var builds = queuedBuildService.Find(Include.Build.Default().StartDate());
 
             // Assert
             builds.Count.Should().Be(2);
@@ -147,7 +147,7 @@ namespace NetCoreTeamCity.Tests.Services
             var queuedBuildService = new QueuedBuildService(teamCityApiClient);
 
             // Act
-            var builds = queuedBuildService.Find(By.BuildType.Id("123"), Include.Build.QueuedDate());
+            var builds = queuedBuildService.Find(By.BuildType.Id("123"), Include.Build.Default().QueuedDate());
 
             // Assert
             builds.Count.Should().Be(1);
@@ -200,7 +200,7 @@ namespace NetCoreTeamCity.Tests.Services
             var queuedBuildService = new QueuedBuildService(teamCityApiClient);
 
             // Act
-            var builds = queuedBuildService.Find(By.Project.Id("123"), Include.Build.QueuedDate());
+            var builds = queuedBuildService.Find(By.Project.Id("123"), Include.Build.Default().QueuedDate());
 
             // Assert
             builds.Count.Should().Be(1);

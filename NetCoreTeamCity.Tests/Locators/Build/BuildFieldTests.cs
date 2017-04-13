@@ -8,6 +8,110 @@ namespace NetCoreTeamCity.Tests.Locators.Build
     public class BuildFieldTests
     {
         [Test]
+        public void Include_Default()
+        {
+            // Arrange
+            var fields = Include.Build.Default();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl)");
+        }
+
+        [Test]
+        public void Include_BuildTypeId()
+        {
+            // Arrange
+            var fields = Include.Build.BuildTypeId();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(buildTypeId)");
+        }
+
+        [Test]
+        public void Include_Href()
+        {
+            // Arrange
+            var fields = Include.Build.Href();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(href)");
+        }
+
+        [Test]
+        public void Include_Id()
+        {
+            // Arrange
+            var fields = Include.Build.Id();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(id)");
+        }
+
+        [Test]
+        public void Include_Number()
+        {
+            // Arrange
+            var fields = Include.Build.Number();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(number)");
+        }
+
+        [Test]
+        public void Include_State()
+        {
+            // Arrange
+            var fields = Include.Build.State();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(state)");
+        }
+
+        [Test]
+        public void Include_Status()
+        {
+            // Arrange
+            var fields = Include.Build.Status();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(status)");
+        }
+
+        [Test]
+        public void Include_WebUrl()
+        {
+            // Arrange
+            var fields = Include.Build.WebUrl();
+
+            // Act
+            var query = fields.GetFieldsQueryString();
+
+            // Assert
+            query.Should().Be("build(webUrl)");
+        }
+
+        [Test]
         public void Include_BranchName()
         {
             // Arrange
@@ -17,7 +121,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,branchName)");
+            query.Should().Be("build(branchName)");
         }
 
 
@@ -31,7 +135,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,queuedDate)");
+            query.Should().Be("build(queuedDate)");
         }
 
         [Test]
@@ -44,7 +148,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,startDate)");
+            query.Should().Be("build(startDate)");
         }
 
         [Test]
@@ -57,7 +161,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,finishDate)");
+            query.Should().Be("build(finishDate)");
         }
 
         [Test]
@@ -70,7 +174,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,statusText)");
+            query.Should().Be("build(statusText)");
         }
 
         [Test]
@@ -83,7 +187,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,revisions)");
+            query.Should().Be("build(revisions)");
         }
 
         [Test]
@@ -96,7 +200,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,buildType)");
+            query.Should().Be("build(buildType)");
         }
 
         [Test]
@@ -109,7 +213,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,triggered)");
+            query.Should().Be("build(triggered)");
         }
 
         [Test]
@@ -122,7 +226,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,lastChanges(change))");
+            query.Should().Be("build(lastChanges(change))");
         }
 
         [Test]
@@ -135,7 +239,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,agent)");
+            query.Should().Be("build(agent)");
         }
 
         [Test]
@@ -148,7 +252,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,properties(property))");
+            query.Should().Be("build(properties(property))");
         }
 
         [Test]
@@ -161,7 +265,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,testOccurrences)");
+            query.Should().Be("build(testOccurrences)");
         }
 
         [Test]
@@ -174,7 +278,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,personal)");
+            query.Should().Be("build(personal)");
         }
 
         [Test]
@@ -187,7 +291,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,comment)");
+            query.Should().Be("build(comment)");
         }
 
         [Test]
@@ -200,7 +304,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = fields.GetFieldsQueryString();
 
             // Assert
-            query.Should().Be("build(buildTypeId,href,id,number,state,status,webUrl,running-info)");
+            query.Should().Be("build(running-info)");
         }
     }
 }

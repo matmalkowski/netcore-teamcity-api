@@ -12,10 +12,11 @@ namespace NetCoreTeamCity.Api
 
             Builds = bootstrapper.Get<IBuildService>();
             QueuedBuilds = bootstrapper.Get<IQueuedBuildService>();
+            Changes = bootstrapper.Get<IChangeService>();
         }
 
         public IBuildService Builds { get; }
-
         public IQueuedBuildService QueuedBuilds { get; }
+        public IChangeService Changes { get; }
     }
 }

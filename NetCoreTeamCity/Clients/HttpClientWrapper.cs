@@ -56,7 +56,25 @@ namespace NetCoreTeamCity.Clients
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
             return _client.PutAsync(url, content);
         }
-        
+
+        public HttpResponseMessage Delete(string url, HttpContent content, string contentType = HttpContentType.Json)
+        {
+            return DeleteAsync(url, content, contentType).Result;
+        }
+
+        public Task<HttpResponseMessage> DeleteAsync(string url, HttpContent content, string contentType = HttpContentType.Json)
+        {
+            var request = new HttpRequestMessage()
+            {
+                Content = content,
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(url)
+            };
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
+            return _client.SendAsync(request);
+        }
+
         public void SetBasicAuthentication(string userName, string password)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{userName}:{password}"));
@@ -67,6 +85,5 @@ namespace NetCoreTeamCity.Clients
         {
             _client.Dispose();
         }
-
     }
 }

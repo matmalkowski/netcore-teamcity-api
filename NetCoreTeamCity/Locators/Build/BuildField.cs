@@ -8,7 +8,54 @@ namespace NetCoreTeamCity.Locators.Build
 
         internal BuildField()
         {
-            _fields = new List<string>() { "buildTypeId", "href", "id", "number", "state", "status", "webUrl" };
+            _fields = new List<string>();
+        }
+
+        public BuildField Default()
+        {
+            return BuildTypeId().Href().Id().Number().State().Status().WebUrl();
+        }
+
+        public BuildField BuildTypeId()
+        {
+            _fields.Add("buildTypeId");
+            return this;
+        }
+
+        public BuildField Href()
+        {
+            _fields.Add("href");
+            return this;
+        }
+
+        public BuildField Id()
+        {
+            _fields.Add("id");
+            return this;
+        }
+
+        public BuildField Number()
+        {
+            _fields.Add("number");
+            return this;
+        }
+
+        public BuildField State()
+        {
+            _fields.Add("state");
+            return this;
+        }
+
+        public BuildField Status()
+        {
+            _fields.Add("status");
+            return this;
+        }
+
+        public BuildField WebUrl()
+        {
+            _fields.Add("webUrl");
+            return this;
         }
 
         public BuildField BranchName()
@@ -103,6 +150,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         internal string GetFieldsQueryString()
         {
+            if (_fields.Count == 0) this.Default();
             return $"build({string.Join(",", _fields)})";
         }
     }

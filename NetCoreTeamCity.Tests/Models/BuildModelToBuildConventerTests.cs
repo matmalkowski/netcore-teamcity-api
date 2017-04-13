@@ -79,7 +79,7 @@ namespace NetCoreTeamCity.Tests.Models
             var buildModel = new BuildModel
             {
                 LastChanges =
-                    new LastChanges {Change = new List<Change>() {new Change() {Id = 1}, new Change() {Id = 2}}}
+                    new Changes {Change = new List<ChangeModel>() {new ChangeModel() {Id = 1}, new ChangeModel() {Id = 2}}}
             };
 
             // Act

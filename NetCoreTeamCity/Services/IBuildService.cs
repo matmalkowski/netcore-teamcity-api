@@ -11,5 +11,8 @@ namespace NetCoreTeamCity.Services
         IList<Build> Find(BuildField fields = null, int count = 100);
         Build Stop(long buildId, string comment, bool reAddToTheQueue = false);
         IBuildTagsService Tags { get; }
+        void Pin(long buildId, string comment = null);
+        void UnPin(long buildId, string comment = null);
+        bool IsPinned(long buildId);
     }
 }

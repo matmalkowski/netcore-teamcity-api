@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace NetCoreTeamCity.Models
 {
-    public class Change
+    internal class ChangeModel
     {
         public int Id { get; set; }
         public string Version { get; set; }
@@ -13,7 +12,7 @@ namespace NetCoreTeamCity.Models
         public string WebUrl { get; set; }
         public string Comment { get; set; }
         public User User { get; set; }
-        public IList<File> Files { get; set; }
+        public Files Files { get; set; }
         public VcsRootInstance VcsRootInstance { get; set; }
     }
 }
