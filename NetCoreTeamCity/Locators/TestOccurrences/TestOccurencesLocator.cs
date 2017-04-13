@@ -36,15 +36,9 @@ namespace NetCoreTeamCity.Locators.TestOccurrences
             return this;
         }
 
-        public TestOccurrenceLocator BuildType(BuildConfigurationLocator buildTypeLocator)
+        public TestOccurrenceLocator AffectedProject(string projectname)
         {
-            _locators.Add(new ApiLocator("buildType", $"({(buildTypeLocator as ILocator).GetLocatorQueryString()})"));
-            return this;
-        }
-
-        public TestOccurrenceLocator AffectedProject(ProjectLocator affectedProject)
-        {
-            _locators.Add(new ApiLocator("affectedProduct", $"({(affectedProject as ILocator).GetLocatorQueryString()})"));
+            _locators.Add(new ApiLocator("affectedProduct", projectname));
             return this;
         }
 
