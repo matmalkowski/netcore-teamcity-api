@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+	<VersionPrefix>0.1.1-beta</VersionPrefix>
+    <TargetFramework>netcoreapp1.1</TargetFramework>    
+    <OutputTypeEx>library</OutputTypeEx>
+	<AssemblyName>NetCoreTeamCity.Tests</AssemblyName>
+	<PackageId>NetCoreTeamCity.Tests</PackageId>
+	<PackageProjectUrl>https://github.com/monkey3310/netcore-teamcity-api/</PackageProjectUrl>
+	<PackageLicenseUrl>https://github.com/monkey3310/netcore-teamcity-api/blob/master/LICENSE</PackageLicenseUrl>
+	<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+	<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+	<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="3.3.2" />
+    <PackageReference Include="FluentAssertions" Version="4.19.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="NUnit" Version="3.6.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreTeamCity\NetCoreTeamCity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+</Project>
