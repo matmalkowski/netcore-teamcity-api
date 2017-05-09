@@ -1,11 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
-
   <PropertyGroup>
-	<VersionPrefix>0.1.1-beta</VersionPrefix>
     <TargetFramework>netcoreapp1.1</TargetFramework>    
     <OutputTypeEx>library</OutputTypeEx>
 	<AssemblyName>NetCoreTeamCity.Tests</AssemblyName>
