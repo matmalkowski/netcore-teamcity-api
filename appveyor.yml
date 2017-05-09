@@ -1,4 +1,4 @@
-version: '0.1.1-beta-{build}'
+version: '0.1.2-beta-{build}'
 configuration:
 - Release
 platform: Any CPU
@@ -9,7 +9,7 @@ build_script:
 after_build:
 - dotnet pack ".\NetCoreTeamCity" -c %CONFIGURATION% --no-build -o artifacts
 test_script:
-- dotnet test ".\NetCoreTeamCity.Tests" -c %CONFIGURATION%
+- dotnet test ".\NetCoreTeamCity.Tests\NetCoreTeamCity.Tests.csproj" -c %CONFIGURATION%
 artifacts:
 - path: artifacts\**\*.*
 cache:

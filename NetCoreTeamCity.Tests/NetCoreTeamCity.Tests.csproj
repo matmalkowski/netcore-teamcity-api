@@ -15,6 +15,8 @@
 	<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 	<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
 	<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	<Version>0.1.2-beta</Version>
+	<Description />
   </PropertyGroup>
 
   <ItemGroup>
