@@ -3,7 +3,7 @@ param(
     $ResultsFile,
 
     [string]
-    $ResultsType = "xunit"
+    $ResultsType = "nunit3"
 )
 
 $ResultsFile = Resolve-Path $ResultsFile
@@ -20,7 +20,7 @@ try
 {
     $wc = New-Object 'System.Net.WebClient'
     $wc.UploadFile($Url, $ResultsFile)
-    Write-Host "Tests result uploaded correctly"
+    Write-Host "Tests result uploaded correctly to $($Url)" 
 }
 catch
 {
