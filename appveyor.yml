@@ -15,7 +15,8 @@ build:
 after_build:
 - dotnet pack ".\NetCoreTeamCity\NetCoreTeamCity.csproj" -c %CONFIGURATION% -o ..\artifacts
 test_script:
-- dotnet test ".\NetCoreTeamCity.Tests\NetCoreTeamCity.Tests.csproj" -c %CONFIGURATION%
+- dotnet test ".\NetCoreTeamCity.Tests\NetCoreTeamCity.Tests.csproj" -c %CONFIGURATION% --logger:trx;LogFileName=tests-results01.xml
+  - ps: .\build\uploadtests.ps1 ".\NetCoreTeamCity.Tests\NetCoreTeamCity.Tests\TestResults\tests-results01.xml"
 artifacts:
 - path: artifacts\**\*.*
 cache:
