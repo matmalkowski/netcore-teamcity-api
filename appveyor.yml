@@ -13,7 +13,7 @@ build:
   project: NetCoreTeamCity.sln
   
 after_build:
-- dotnet pack ".\NetCoreTeamCity" -c %CONFIGURATION% --no-build -o artifacts
+- dotnet pack ".\NetCoreTeamCity\NetCoreTeamCity.csproj" -c %CONFIGURATION%
 test_script:
 - dotnet test ".\NetCoreTeamCity.Tests\NetCoreTeamCity.Tests.csproj" -c %CONFIGURATION%
 artifacts:
