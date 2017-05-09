@@ -3,7 +3,7 @@ param(
     $ResultsFile,
 
     [string]
-    $ResultsType = "nunit"
+    $ResultsType = "mstest"
 )
 
 $ResultsFile = Resolve-Path $ResultsFile
