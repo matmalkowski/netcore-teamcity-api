@@ -56,7 +56,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => pinningService.Pin(123);
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => pinningService.UnPin(123);
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => pinningService.IsPinned(123);
             
             // Assert
-            action.ShouldThrow<UnexpectedApiResponseException>()
+            action.Should().Throw<UnexpectedApiResponseException>()
                 .Which.Message.Should().Contain("TeamCity API response was \"someUnexptectedString\", exptected it to be \"true\"/\"false\"");
         }
     }

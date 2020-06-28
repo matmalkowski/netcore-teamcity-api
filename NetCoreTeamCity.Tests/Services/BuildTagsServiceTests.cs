@@ -116,7 +116,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => tagService.Get(123);
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => tagService.Replace(123, (string) null);
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\\r\\nParameter name: tag");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null. (Parameter 'tag')");
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => tagService.Replace(123, "tag1");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Test]
@@ -277,7 +277,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => tagService.Add(123, (string)null);
 
             // Assert
-            action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\\r\\nParameter name: tag");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null. (Parameter 'tag')");
         }
 
         [Test]
@@ -294,7 +294,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => tagService.Add(123, "tag1");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

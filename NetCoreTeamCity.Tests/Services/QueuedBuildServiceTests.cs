@@ -334,7 +334,7 @@ namespace NetCoreTeamCity.Tests.Services
             // Act
             Action action = () => queuedBuildService.Run(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
 
         }
 
@@ -366,7 +366,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => queuedBuildService.Get(123);
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -383,7 +383,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => buildService.Cancel(123, "Test");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
     }
