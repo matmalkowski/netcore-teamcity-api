@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -85,7 +86,15 @@ namespace NetCoreTeamCity.Clients
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
-        
+
+        public async Task DownloadAsync(string urlFrom, string pathTo)
+        {
+            var uri = new Uri(urlFrom);
+            var response = await _client.GetAsync(uri);
+            using var fs = new FileStream(pathTo, FileMode.CreateNew);
+            await response.Content.CopyToAsync(fs);
+        }
+
         public void Dispose()
         {
             _client.Dispose();

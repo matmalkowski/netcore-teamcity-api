@@ -18,7 +18,8 @@ namespace NetCoreTeamCity.Clients
         Task<HttpResponseMessage> DeleteAsync(string url, HttpContent content, string contentType = HttpContentType.Json);
 
         void SetBasicAuthentication(string userName, string password);
-
         void SetBearerTokenAuthentication(string token);
+
+        Task DownloadAsync(string urlFrom, string pathTo);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using NetCoreTeamCity.Exceptions;
 using NetCoreTeamCity.Helpers;
 using Newtonsoft.Json;
@@ -96,6 +97,12 @@ namespace NetCoreTeamCity.Clients
                     ThrowHttpException(response, GetRequestUri(url));
                 }
             }
+        }
+
+        public async Task DownloadAsync(string url, string pathTo)
+        {
+            using var client = GetHttpClient();
+            await client.DownloadAsync(GetRequestUri(url), pathTo);
         }
 
         private T2 MakeTwoWayRequest<T1, T2>(string url, T1 obj, Func<string, HttpContent, string, HttpResponseMessage> httpClientMethod)

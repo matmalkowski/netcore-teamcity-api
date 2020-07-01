@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NetCoreTeamCity.Clients;
 using NetCoreTeamCity.Locators;
 using NetCoreTeamCity.Locators.Build;
@@ -17,12 +18,22 @@ namespace NetCoreTeamCity.Services
             ApiClient = apiClient;
         }
 
-        public IList<Artifact> Find(BuildLocator locator, int count = 100)
+        public IList<Artifact> Find(BuildLocator locator, int count = 10)
         {
             var query = GetQuery(locator, count);
             return Find(Endpoint, query);
         }
-        
+
+        public async Task DownloadAsync(BuildLocator locator, string path, int count = 10)
+        {
+            var artifacts = Find(locator, count);
+
+            foreach (var artifact in artifacts)
+            {
+                await ApiClient.DownloadAsync(artifact.Href, $"{path}/{artifact.Name}");
+            }
+        }
+
         private IList<Artifact> Find(string endpoint, string query)
         {
             var artifacts = ApiClient.Get<Artifacts>($"{endpoint}{query}/artifacts");
