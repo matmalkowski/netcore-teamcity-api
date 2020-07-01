@@ -17,7 +17,7 @@ namespace NetCoreTeamCity.Tests.Services
         {
             // Arrange
             var teamCityApiClient = A.Fake<ITeamCityApiClient>();
-            A.CallTo(() => teamCityApiClient.Get<Artifacts>("builds/count:100,buildType:(id:buildtypeid)/artifacts"))
+            A.CallTo(() => teamCityApiClient.Get<Artifacts>("builds/count:10,buildType:(id:buildtypeid)/artifacts"))
                 .Returns(new Artifacts() {File = new List<ArtifactModel>() {new ArtifactModel() {Name = "expectedName"}}});
 
             var service = new ArtefactService(teamCityApiClient);
