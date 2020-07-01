@@ -11,7 +11,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <Description />
-    <Version>0.1.4-beta</Version>
+    <Version>0.1.6-beta</Version>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
 
