@@ -12,10 +12,19 @@ namespace NetCoreTeamCity.Clients
             Password = password;
             FavorJsonOverXml = favorJsonOverXml;
         }
-        public Uri TeamCityHost { get; private set; }
-        public bool ConnectAsGuest { get; private set; }
-        public string Username { get; private set; }
-        public string Password { get; private set; }
-        public bool FavorJsonOverXml { get; private set; }
+
+        public TeamCityConnectionSettings(Uri teamCityHost, string token, bool favorJsonOverXml = true)
+        {
+            TeamCityHost = teamCityHost;
+            Token = token;
+            FavorJsonOverXml = favorJsonOverXml;
+        }
+        
+        public Uri TeamCityHost { get; }
+        public string Token { get; }
+        public bool ConnectAsGuest { get; }
+        public string Username { get; }
+        public string Password { get; }
+        public bool FavorJsonOverXml { get; }
     }
 }

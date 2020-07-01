@@ -140,10 +140,23 @@ namespace NetCoreTeamCity.Clients
 
         private string GetRequestUri(string url)
         {
-            var auth = _teamCityConnectionSettings.ConnectAsGuest ? "guestAuth" : "httpAuth";
-            return new Uri(_teamCityConnectionSettings.TeamCityHost, $"{auth}/app/rest/{url}").ToString();
+            return new Uri(_teamCityConnectionSettings.TeamCityHost, $"{Auth}app/rest/{url}").ToString();
         }
 
+        private string Auth
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_teamCityConnectionSettings.Token))
+
+                {
+                    return _teamCityConnectionSettings.ConnectAsGuest ? "guestAuth/" : "httpAuth/";
+                }
+                
+                return String.Empty;
+            }
+        }
+        
         private static void ThrowHttpException(HttpResponseMessage response, string url)
         {
             throw new HttpException(response.StatusCode, $"Error: {response.StatusCode}\nHTTP: {response.StatusCode}\nURL: {url}\n{response.Content.ReadAsStringAsync().Result}");
@@ -152,6 +165,13 @@ namespace NetCoreTeamCity.Clients
         private IHttpClientWrapper GetHttpClient()
         {
             var httpClient = _httpClientWrapperFactory.Create();
+
+            if (!string.IsNullOrEmpty(_teamCityConnectionSettings.Token))
+            {
+                httpClient.SetBearerTokenAuthentication(_teamCityConnectionSettings.Token);
+                return httpClient;
+            }
+
             if (!_teamCityConnectionSettings.ConnectAsGuest)
             {
                 if (string.IsNullOrEmpty(_teamCityConnectionSettings.Username) || string.IsNullOrEmpty(_teamCityConnectionSettings.Password))

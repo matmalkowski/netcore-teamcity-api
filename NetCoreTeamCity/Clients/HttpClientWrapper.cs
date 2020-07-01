@@ -81,6 +81,11 @@ namespace NetCoreTeamCity.Clients
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
         }
         
+        public void SetBearerTokenAuthentication(string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+        
         public void Dispose()
         {
             _client.Dispose();
