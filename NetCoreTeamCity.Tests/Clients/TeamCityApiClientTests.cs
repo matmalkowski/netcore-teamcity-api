@@ -118,7 +118,7 @@ namespace NetCoreTeamCity.Tests.Clients
             Action action = () => tcApiClient.Get<BuildModel>("test");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace NetCoreTeamCity.Tests.Clients
             Action action = () => tcApiClient.Get<BuildModel>("test");
 
             // Assert
-            action.ShouldThrow<ArgumentException>().Which.Message.Should().Be("When connecting as guest you must specify username and password");
+            action.Should().Throw<ArgumentException>().Which.Message.Should().Be("When connecting as guest you must specify username and password");
         }
 
         [Test]

@@ -182,7 +182,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => buildService.Get(123);
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace NetCoreTeamCity.Tests.Services
             Action action = () => buildService.Stop(123, "Test");
 
             // Assert
-            action.ShouldThrow<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            action.Should().Throw<HttpException>().Which.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace NetCoreTeamCity.Clients
+﻿using System.Threading.Tasks;
+
+namespace NetCoreTeamCity.Clients
 {
     internal interface ITeamCityApiClient
     {
@@ -8,5 +10,6 @@
         T Put<T>(string url, T obj);
         T2 Put<T1, T2>(string url, T1 obj);
         void Delete<T>(string url, T obj);
+        Task DownloadAsync(string url, string pathTo);
     }
 }

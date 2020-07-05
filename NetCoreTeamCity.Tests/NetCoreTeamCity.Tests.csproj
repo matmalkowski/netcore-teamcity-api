@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>    
+    <TargetFramework>netcoreapp3.1</TargetFramework>    
     <OutputTypeEx>library</OutputTypeEx>
 	<AssemblyName>NetCoreTeamCity.Tests</AssemblyName>
 	<PackageId>NetCoreTeamCity.Tests</PackageId>
@@ -12,14 +12,19 @@
 	<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 	<Version>0.1.2-beta</Version>
 	<Description />
+	<LangVersion>8</LangVersion>
+	<OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FakeItEasy" Version="3.3.2" />
-    <PackageReference Include="FluentAssertions" Version="4.19.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="NUnit" Version="3.6.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
+    <PackageReference Include="FakeItEasy" Version="6.1.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

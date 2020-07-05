@@ -10,6 +10,7 @@ namespace NetCoreTeamCity.Clients
         private bool _guestMode;
         private string _userName;
         private string _password;
+        private string _token;
 
         public TeamCityConnectionSettingsBuilder()
         {
@@ -52,10 +53,19 @@ namespace NetCoreTeamCity.Clients
             return this;
         }
 
+        public TeamCityConnectionSettingsBuilder WithToken(string token)
+        {
+            _token = token;
+            return this;
+        }
+
         public ITeamCityConnectionSettings Build()
         {
             var protocol = _useSSL ? "https" : "http";
-            return new TeamCityConnectionSettings(new Uri($"{protocol}://{_teamCityHost}"), _guestMode, _userName, _password, !_useXml);
+            
+            return string.IsNullOrEmpty(_token) ? 
+                new TeamCityConnectionSettings(new Uri($"{protocol}://{_teamCityHost}"), _guestMode, _userName, _password, !_useXml) : 
+                new TeamCityConnectionSettings(new Uri($"{protocol}://{_teamCityHost}"), _token, !_useXml);
         }
     }
 }

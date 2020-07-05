@@ -2,6 +2,21 @@
 
 namespace NetCoreTeamCity.Models
 {
+    internal static class ArtifactModelToArtifactConverter
+    {
+        public static Artifact Convert(this ArtifactModel model)
+        {
+            var artifact = new Artifact()
+            {
+                Name = model.Name,
+                Size = model.Size,
+                ModificationTime = model.ModificationTime,
+                Href = model.Href
+            };
+            return artifact;
+        }
+    }
+
     internal static class BuildModelToBuildConventer
     {
         public static Build Convert(this BuildModel model)

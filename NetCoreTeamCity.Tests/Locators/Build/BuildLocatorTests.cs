@@ -218,7 +218,7 @@ namespace NetCoreTeamCity.Tests.Locators.Build
             var query = (locator as ILocator).GetLocatorQueryString();
 
             // Assert
-            query.Should().Be($"state:{state.ToString().ToUpper()}");
+            query.Should().Be($"state:{state.ToString().ToLower()}");
         }
 
         [TestCase(Flag.Any)]

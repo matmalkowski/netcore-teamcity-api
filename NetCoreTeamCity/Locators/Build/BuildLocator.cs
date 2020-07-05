@@ -95,7 +95,7 @@ namespace NetCoreTeamCity.Locators.Build
 
         public BuildLocator State(BuildState buildState)
         {
-            _locators.Add(new ApiLocator("state", buildState.ToString().ToUpper()));
+            _locators.Add(new ApiLocator("state", buildState.ToString().ToLower()));
             return this;
         }
 
